@@ -1,6 +1,7 @@
 class Company < ApplicationRecord
 
-	validates :company, presence: true
+	validates :name, presence: true
+	validates :company_type, presence: true
 	
-
+	has_many :positions
 end

@@ -3,5 +3,7 @@ Rails.application.routes.draw do
 
   root "pages#home"
   get 'pages/home' , to: 'pages#home'
-  resources :companies
+  #resources :companies
+
+  get '/companies', to: 'companies#index'
 end

@@ -10,11 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170514053636) do
+ActiveRecord::Schema.define(version: 20170515215650) do
 
   create_table "companies", force: :cascade do |t|
     t.string "name"
     t.string "company_type"
+  end
+
+  create_table "positions", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.text "job_expectation"
+    t.decimal "avg_yrs_exp"
+    t.text "criteria_for_next_level"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "company_id"
   end
 
 end
