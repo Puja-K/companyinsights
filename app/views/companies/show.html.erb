@@ -1,0 +1,15 @@
+<h1 align="center"> Company: <%= @company.name.capitalize %> </h1>
+<hr />
+<div class="well col-md-8 col-md-offset-2">
+	<h4 class="center description"><strong> Description: </strong></h4>
+	<hr />
+		show the description from the positions table
+	<hr />
+	<div class="company-actions">
+		<%= link_to "Edit", edit_company_path(@company), class: "btn btn-xs btn-warning"%>
+		<%= link_to "Delete", company_path(@company), method: :delete, 
+								data: {confirm: "Are you sure you want to delete this company?"}, 
+								class: "btn btn-xs btn-danger"%>
+	</div>
+
+</div>
