@@ -1,10 +1,12 @@
 class CompaniesController < ApplicationController
+
+	before_action :set_company, only: [:show, :edit, :update]
 	def index
 		@companies = Company.all
 	end
 
 	def show
-		@company = Company.find(params[:id])
+		
 	end
 
 	def new
@@ -24,12 +26,11 @@ class CompaniesController < ApplicationController
 
 	#submits to update
 	def edit
-		@company = Company.find(params[:id])
+		
 	
 	end
 
 	def update
-		@company = Company.find(params[:id])
 		if @company.update(company_params)
 			flash[:success] = "Company was updated successfully!"
 			redirect_to company_path(@company)
@@ -46,6 +47,10 @@ class CompaniesController < ApplicationController
 	end
 
 	private
+
+	def set_company
+		@company = Company.find(params[:id])
+	end
 
 	def company_params
 		params.require(:company).permit(:name, :company_type)
