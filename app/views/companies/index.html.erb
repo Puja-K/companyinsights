@@ -1,14 +1,22 @@
-<% @companies.each do |company| %>
-	<div class="row">
-		<div class="col-md-2">
-			<section class="center">
-				
-			</section>
-		</div>
-		<div class="col-md-8 well">
-			<h4> <%= link_to company.name, company_path(company) %> </h4>
-			<small><%=company.company_type%></small>
-		</div>
-	</div>
-	
-<% end %>
+
+<h1>Companies</h1>
+<%= link_to 'New Company', new_company_path %>
+<table>
+  <tr>
+    <th>Company Name</th>
+    <th>Type</th>
+    <th colspan="3"></th>
+  </tr>
+ 
+  <% @companies.each do |company| %>
+    <tr>
+      <td><%= company.name %></td>
+      <td><%= company.company_type %></td>
+      <td><%= link_to 'Show', company_path(company), class: "btn btn-xs btn-warning" %></td>
+      <td><%= link_to 'Edit', edit_company_path(company), class: "btn btn-xs btn-warning" %></td>
+      <td><%= link_to 'Destroy', company_path(company), class: "btn btn-xs btn-warning", 
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+</table>

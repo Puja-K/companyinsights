@@ -1,0 +1,62 @@
+<%= render 'shared/page_title', title: "Add new position"%>
+<%= render 'shared/errors', obj: @position %>
+<div class="row">
+	<div class="col-md-12">
+		<%= form_for([@company,@position], url:company_positions_url, :html => {class: "form-horizontal", role: "form"}) do |f| %>
+			<div class="form-group">
+				<div class="control-label col-md-2">
+				<%= f.label :title %>
+
+				</div>
+				<div class="col-md-8">
+					<%= f.text_field :title, class: "form-control", placeholder: "Title at this company", autofocus: true%>	
+				</div>
+
+			</div>	
+			<div class="form-group">
+				<div class="control-label col-md-2">
+				<%= f.label :description%>
+				</div>
+				<div class="col-md-8">
+         			 <%= f.text_area :description, rows: 10, class: "form-control", 
+                                    placeholder: "job description" %>
+        		</div>
+        	</div>
+        	<div class="form-group">
+				<div class="control-label col-md-2">
+					<%= f.label :job_expectation%>
+				</div>
+				<div class="col-md-8">
+          			<%= f.text_area :job_expectation, rows: 10, class: "form-control", 
+                                    placeholder: "job expectation" %>
+        		</div>
+			</div>
+			<div class="form-group">
+				<div class="control-label col-md-2">
+					<%= f.label :avg_yrs_exp%>
+				</div>
+				<div class="col-md-8">
+          			<%= f.text_field :avg_yrs_exp, class: "form-control", 
+                                    placeholder: "Avg years of experience" %>
+        		</div>
+			</div>
+			<div class="form-group">
+				<div class="control-label col-md-2">
+					<%= f.label :criteria_for_next_level%>
+				</div>
+				<div class="col-md-8">
+          			<%= f.text_area :criteria_for_next_level, rows: 10, class: "form-control", 
+                                    placeholder: "Avg years of experience" %>
+        		</div>
+			</div>
+			<div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+          <%= f.submit class: "btn btn-primary btn-lg btn-xlarge" %>
+        </div>
+      </div>
+		<% end %>
+		<div class="col-md-4 col-md-offset-4 colormatch">
+     		 [ <%= link_to "Cancel request and return to Companies listing", company_path(@company) %> ]
+    </div>
+	</div>
+</div>

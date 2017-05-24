@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   root "pages#home"
   get 'pages/home' , to: 'pages#home'
   
-  resources :companies
+  resources :companies do
+  	resources :positions
+  end
+  get '/signup', to: 'user#new'
+  resources :users, except: [:new]
   #resources :positions
 
   #get '/companies', to: 'companies#index'
