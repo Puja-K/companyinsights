@@ -7,8 +7,10 @@ Rails.application.routes.draw do
   resources :companies do
   	resources :positions
   end
-  get '/signup', to: 'user#new'
+  get '/signup', to: 'users#new'
+  post '/signup', to: 'users#create'
   resources :users, except: [:new]
+
   #resources :positions
 
   #get '/companies', to: 'companies#index'
