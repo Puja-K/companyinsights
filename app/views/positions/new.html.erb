@@ -1,5 +1,5 @@
 <%= render 'shared/page_title', title: "Add new position"%>
-<%= render 'shared/errors', obj: @position %>
+<%= render 'shared/errors', object: @position %>
 <div class="row">
 	<div class="col-md-12">
 		<%= form_for([@company,@position], url:company_positions_url, :html => {class: "form-horizontal", role: "form"}) do |f| %>
