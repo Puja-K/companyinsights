@@ -9,6 +9,21 @@ class CompaniesController < ApplicationController
 		
 	end
 
+
+	def search
+		if params[:search_company].present? && params[:search_position].present?
+
+			query = Company.joins(:positions).where('positions.title' => params[:search_position]) 
+			#@positions = Company.search(params[:search_company], where: {title: params[:search_position]})
+			@positions = Company.search query
+		else
+			@positions = Company.first.positions.all
+
+		end
+	end
+
+		
+
 	def new
 		@company = Company.new
 	end

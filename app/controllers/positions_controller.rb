@@ -3,6 +3,20 @@ class PositionsController < ApplicationController
 	before_action :set_company, only: [:create, :update, :new]
 	before_action :set_position, only: [:update, :edit]
 	
+
+	def search
+		if params[:company].present? && params[:search_position].present?
+
+			#query = Company.joins(:positions).where('positions.title' => params[:search_position]) 
+			@positions = Position.search(params[:search_position], fields: [:title], load: false, where: {company_id: params[:company][:company_id]})
+			#@positions = Company.search query
+		else
+			flash[:success] = "Sorry search returned 0 results"
+			redirect_to root_url
+
+		end
+	end
+
 	def new
 		@position = Position.new
 	end

@@ -12,7 +12,16 @@ Rails.application.routes.draw do
   
   resources :companies do
   	resources :positions
+
   end
+
+  resources :positions do
+  	collection do
+  		get 'search'
+  	end
+  end
+
+  
   get '/signup', to: 'users#new'
   post '/signup', to: 'users#create'
   get    '/login',   to: 'sessions#new'

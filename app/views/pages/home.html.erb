@@ -2,4 +2,15 @@
 	<h1> Welcome to Company Insights </h1>
 	<h2> The best place to know how companies promote their employees and everything related to that<h2>
 	<p> <%= link_to "Sign up today", signup_path, class: "btn btn-danger btn-lg" %></p>
+	<%= form_tag search_positions_path, method: :get, class: "form-inline" do %>
+		<p>
+			<%= collection_select(:company, :company_id, Company.all, :id, :name, {class: "form-control" }) %>
+			
+			<%= text_field_tag :search_position, params[:search_position], class: "form-control", placeholder: "Position you are interested in" %>
+			<%= submit_tag "Search", name: nil, class: " form-control btn btn-default"%>
+
+		</p>
+	<% end %>
+	
 </div>
+

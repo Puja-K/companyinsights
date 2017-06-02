@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_tag search_positions_path, method: :get, class: "form-inline" do %>
+        <p>
+          <%= collection_select(:company, :company_id, Company.all, :id, :name, {class: "form-control" }) %>
+          
+          <%= text_field_tag :search_position, params[:search_position], class: "form-control", placeholder: "Position you are interested in" %>
+          <%= submit_tag "Search", name: nil, class: " form-control btn btn-default"%>
+
+        </p>
+      <% end %>
+  </div>
+</div>
+
+<%= render 'shared/page_title', title: "Search returned #{@positions.size} results"%>
+
+<table class="table table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Title </th>
+      <th>Job Description</th>
+      <th>Job Expectation </th>
+      <th> Avg Years Experience</th>
+      <th> Criteria for next level</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @positions.each do |position| %>
+      <tr>
+        <td> <%= link_to position.title, company_path(position.company_id) %> </td>
+        <td> <%= position.description %> </td>
+        <td> <%= position.job_expectation %> </td>
+        <td> <%= position.avg_yrs_exp %> </td>
+        <td> <%= position.criteria_for_next_level %> </td>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
