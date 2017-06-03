@@ -18,13 +18,24 @@
 				<%= f.label :company_type%>
 				</div>
 				<div class="col-md-8">
-          <%= f.text_area :company_type, rows: 10, class: "form-control", 
+         			 <%= f.text_area :company_type, rows: 10, class: "form-control", 
                                     placeholder: "Private or Public" %>
-        </div>
+        		</div>
 			</div>
+			<div class="form-group">
+				<div class="control-label col-md-2">
+					<%= f.label "Upload company logo"%>
+				</div>
+				<div class="col-md-8">
+					<span class="picture">
+			    		<%= f.file_field :picture , accept: 'image/jpeg,image/gif,image/png'%>
+			  		</span>
+			  	</div>
+			 </div>
 			<div class="form-group">
         <div class="col-md-offset-2 col-md-10">
           <%= f.submit class: "btn btn-primary btn-lg btn-xlarge" %>
+
         </div>
       </div>
 		<% end %>
@@ -33,3 +44,12 @@
     </div>
 	</div>
 </div>
+
+<script type="text/javascript">
+  $('#company_picture').bind('change', function() {
+    var size_in_megabytes = this.files[0].size/1024/1024;
+    if (size_in_megabytes > 5) {
+      alert('Maximum file size is 5MB. Please choose a smaller file.');
+    }
+  });
+</script>

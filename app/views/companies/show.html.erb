@@ -1,5 +1,6 @@
 <h1 align="center"> Company: <%= @company.name.capitalize %> </h1>
 <hr />
+<%= image_tag @company.picture.url if @company.picture? %>
 <div class="company-actions">
 		<%= link_to 'New Position', new_company_position_path(@company), class: "btn btn-xs btn-warning" %>
 		<%= link_to "Edit", edit_company_path(@company), class: "btn btn-xs btn-warning"%>
