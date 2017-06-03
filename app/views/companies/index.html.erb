@@ -1,16 +1,18 @@
 
 <h1>Companies</h1>
 <%= link_to 'New Company', new_company_path %>
-<table>
+<table class="table">
   <tr>
+  	<th ></th>
     <th>Company Name</th>
+    
     <th>Type</th>
-    <th colspan="3"></th>
+    <th colspan="3">Actions</th>
   </tr>
  
   <% @companies.each do |company| %>
     <tr>
-      <td><%= company.picture %></td>
+      <td> <%= image_tag(company.picture.url(:thumb).to_s) if company.picture? %> </td>
       <td><%= company.name %></td>
       <td><%= company.company_type %></td>
       <td><%= link_to 'Show', company_path(company), class: "btn btn-xs btn-warning" %></td>
