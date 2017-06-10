@@ -37,6 +37,9 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.11'
 
+gem 'omniauth-oauth2', '~> 1.3.1'
+gem 'omniauth-linkedin'
+
 gem 'will_paginate',           '3.1.5'
 gem 'bootstrap-will_paginate', '1.0.0'
 

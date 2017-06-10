@@ -31,6 +31,9 @@ Rails.application.routes.draw do
   resources :account_activations, only: [:edit]
   resources :password_resets, only: [:new, :create, :edit, :update]
 
+  get '/auth/:provider/callback', to: 'oauths#create'
+  get '/auth/failure', to: 'oauth#failure', as: 'oauth_failure'
+  
   #resources :positions
 
   #get '/companies', to: 'companies#index'

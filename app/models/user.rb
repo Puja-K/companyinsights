@@ -11,6 +11,7 @@ class User < ApplicationRecord
 
   	validates :password, presence: true, length: { minimum: 8 }, allow_nil: true
   	
+    has_many :oauthAccounts
 
   	# Returns the hash digest of the given string.
   def User.digest(string)
@@ -72,7 +73,37 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
+
+  def self.create_with_omniauth(auth)
+    create! do |user|
+      user.provider = auth["provider"]
+      user.uid = auth["uid"]
+      user.name = auth["info"]["name"]
+      user.email = auth["info"]["email"]
+      user.password = "nilnilnil"
+      #user.create_oauth_account(auth)
+      user.oauthAccounts.new(uid: auth["uid"], provider: auth[:provider],
+      image_url: auth[:info][:image],
+      profile_url: auth[:info][:urls][:public_profile],
+      raw_data: auth[:extra][:raw_info].to_json   )
+      user.save
+    
+    end
+    
+  end
+
+  
+
   private
+
+  def oauth_account_params
+    { uid: @auth_hash[:uid],
+      provider: @auth_hash[:provider],
+      image_url: @auth_hash[:info][:image],
+      profile_url: @auth_hash[:info][:urls][:public_profile],
+      raw_data: @auth_hash[:extra][:raw_info].to_json }
+  end
+
   # Converts email to all lower-case.
     def downcase_email
       self.email = email.downcase
@@ -83,7 +114,6 @@ class User < ApplicationRecord
       self.activation_token  = User.new_token
       self.activation_digest = User.digest(activation_token)
     end
-
    
 
 end
