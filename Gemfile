@@ -49,6 +49,8 @@ gem 'fog',                     '1.40.0'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'wisper', '~> 2.0.0'
+
 group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'

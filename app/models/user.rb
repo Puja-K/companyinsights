@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+
+  
+
 	attr_accessor :remember_token, :activation_token, :reset_token
 	before_save :downcase_email
 	 before_create :create_activation_digest
@@ -87,7 +90,7 @@ class User < ApplicationRecord
       profile_url: auth[:info][:urls][:public_profile],
       raw_data: auth[:extra][:raw_info].to_json   )
       user.save
-    
+      
     end
     
   end

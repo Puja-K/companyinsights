@@ -1,11 +1,13 @@
 class OauthsController < ApplicationController
 
+  include Wisper::Publisher 
 
   def create
     auth = request.env["omniauth.auth"]
     user = User.find_by_provider_and_uid(auth["provider"], auth["uid"]) || User.create_with_omniauth(auth)
       if user
         log_in user
+        broadcast(:create_new_company, auth)
       end
     redirect_to root_url, flash[:Success] => "Signed in!"
   end

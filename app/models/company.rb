@@ -8,6 +8,9 @@ class Company < ApplicationRecord
 
 	searchkick
 
+	
+
+
 	private
 
     # Validates the size of an uploaded picture.

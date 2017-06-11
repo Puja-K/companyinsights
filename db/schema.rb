@@ -10,12 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170608211309) do
+ActiveRecord::Schema.define(version: 20170610200826) do
 
   create_table "companies", force: :cascade do |t|
     t.string "name"
     t.string "company_type"
     t.string "picture"
+    t.string "industry"
+    t.string "location"
   end
 
   create_table "oauth_accounts", force: :cascade do |t|
