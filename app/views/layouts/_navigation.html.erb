@@ -1,11 +1,15 @@
-<header class="navbar navbar-fixed-top navbar-inverse">
-  <div class="container">
-    <%= link_to "Company Insights", root_path, class: "navbar-brand", id: "logo"%>
-    <nav>
-      <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "Home", root_path %></li>
-        
-        <% if logged_in? %>
+
+<div class="header1" id="header"><!--header section starts from here-->
+    <div class="container1 container768">
+      <div class="logo_section"><%= link_to image_tag('logo.PNG'), root_path, id: "logo"%></div>
+
+      <div class="menuIcon"><%= image_tag "menuicon.png", class: "icon" %></div>
+      <div class="headermenu">
+        <ul class="headermenulist inner_page" id="nav">
+          
+          <li><%= link_to "Home", root_path %></li>
+
+          <% if logged_in? %>
             <% if current_user.admin? %>
               <li><%= link_to "Companies", companies_path%></li>
             <% end %>
@@ -26,9 +30,13 @@
         <% else %>
           <li><%= link_to "Log in", login_path %></li>
         <% end %>
-      </ul>
-    </nav>
+
+        </ul>
+      </div>
+      <div class="clearfix"></div>
+    </div>
   </div>
-</header>
+
+
 
 
