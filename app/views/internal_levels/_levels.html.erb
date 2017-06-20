@@ -1,0 +1,19 @@
+<table class="table table-striped">
+  <tr>
+  	
+    <th>Internal Level</th>
+    
+    <th>Actions</th>
+  </tr>
+ 
+  <% @company.internal_levels.each do |l| %>
+    <tr>
+      
+      <td><%= l.name %></td>
+      
+      <td><%= link_to 'Delete', company_internal_level_path(@company, l), class: "btn btn-xs btn-warning", 
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+</table>

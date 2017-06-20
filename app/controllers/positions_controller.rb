@@ -1,6 +1,6 @@
 class PositionsController < ApplicationController
 	
-	before_action :set_company, only: [:create, :update, :new]
+	before_action :set_company, only: [:create, :update, :new, :edit]
 	before_action :set_position, only: [:update, :edit]
 	
 
@@ -22,12 +22,39 @@ class PositionsController < ApplicationController
 	end
 
 	def create
-    	@position = @company.positions.create(position_params)
-		if @position.save
-			flash[:success] ="Position was created successfully"
-			redirect_to company_path(@company)
-		else
-			render 'new'
+
+		puts params[:position][:internal_level_ids]
+
+		@position = @company.positions.create!(position_params)
+		#@position.internal_level_ids << params[:position][:internal_level_ids]
+		#@position.save
+		#@position.internal_levels << @internal_level
+		redirect_to company_path(@company)
+		
+
+	end
+
+	def create_old
+		Position.transaction do
+			Company.transaction do
+				@position = Position.new(position_params)
+				if @position.save
+					@company = @company.internal_levels.new(position: @position, name: params[:internal_level][:name])
+						if @company.save
+							flash[:success] ="Position was created successfully"
+							redirect_to company_path(@company)
+						else
+							raise 'Position did not save'
+							render 'new'
+						end
+				else
+					raise 'Position did not save'
+					flash[:error] = "Position did not save"
+					render 'new'
+				end
+				
+
+			end
 		end
 	end
 
@@ -49,11 +76,13 @@ class PositionsController < ApplicationController
 	def set_position
 		@position = Position.find(params[:id])
 	end
+	
 	def set_company
 		@company = Company.find(params[:company_id])
 	end
 
+
 	def position_params
-		params.require(:position).permit(:title, :description, :job_expectation, :avg_yrs_exp, :criteria_for_next_level)
+		params.require(:position).permit(:title, :description, :job_expectation, :avg_yrs_exp, :criteria_for_next_level, internal_level_ids: [])
 	end
 end

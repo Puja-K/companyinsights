@@ -3,8 +3,10 @@ class Company < ApplicationRecord
 	validates :name, presence: true
 	validates :company_type, presence: true
 	mount_uploader :picture, PictureUploader
-	has_many :positions
+	has_many :internal_levels
+	#has_many :positions, through: :internal_levels
 	validate  :picture_size
+	has_many :positions
 
 	searchkick
 

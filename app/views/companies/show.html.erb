@@ -2,6 +2,7 @@
 <hr />
 <%= image_tag @company.picture.url if @company.picture? %>
 <div class="company-actions">
+		<%= link_to 'Add Levels', new_company_internal_level_path(@company), class: "btn btn-xs btn-warning" %>
 		<%= link_to 'New Position', new_company_position_path(@company), class: "btn btn-xs btn-warning" %>
 		<%= link_to "Edit", edit_company_path(@company), class: "btn btn-xs btn-warning"%>
 		<%= link_to "Delete", company_path(@company), method: :delete, 
@@ -16,6 +17,13 @@
 				<li> <strong> Title: </strong><%= p.title %></li>
 				
 				<hr />
+
+				<li> <strong> Internal Level: 
+				<% p.internal_levels.each do |l| %>
+					</strong><%= l.name %></li>
+				<% end %>
+				<hr />
+
 				<li><strong> Description: </strong><%= p.description %></li>
 				
 				<hr />

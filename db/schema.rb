@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170610200826) do
+ActiveRecord::Schema.define(version: 20170619205448) do
+
+  create_table "bands", force: :cascade do |t|
+    t.integer "position_id"
+    t.integer "internal_level_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["internal_level_id"], name: "index_bands_on_internal_level_id"
+    t.index ["position_id"], name: "index_bands_on_position_id"
+  end
 
   create_table "companies", force: :cascade do |t|
     t.string "name"
@@ -18,6 +27,16 @@ ActiveRecord::Schema.define(version: 20170610200826) do
     t.string "picture"
     t.string "industry"
     t.string "location"
+  end
+
+  create_table "internal_levels", force: :cascade do |t|
+    t.integer "company_id"
+    t.integer "position_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_internal_levels_on_company_id"
+    t.index ["position_id"], name: "index_internal_levels_on_position_id"
   end
 
   create_table "oauth_accounts", force: :cascade do |t|

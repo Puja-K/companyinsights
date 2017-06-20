@@ -1,7 +1,7 @@
 <%= render 'shared/errors', object: @position %>
 <div class="row">
 	<div class="col-md-12">
-		<%= form_for([@company,@position], url:company_position_url, :html => {class: "form-horizontal", role: "form"}) do |f| %>
+		<%= form_for([@company,@position], :html => {class: "form-horizontal", role: "form"}) do |f| %>
 			<div class="form-group">
 				<div class="control-label col-md-2">
 				<%= f.label :title %>
@@ -11,6 +11,19 @@
 					<%= f.text_field :title, class: "form-control", placeholder: "Title at this company", autofocus: true%>	
 				</div>
 
+			</div>
+			<div class="form-group">
+				<div class="control-label col-md-2">
+				<%= f.label "Internal Level" %>
+
+				</div>
+				<div class="col-md-8">
+					<% @company.internal_levels.each do |l| %>
+						  <%= check_box_tag "position[internal_level_ids][]", l.id, @position.internal_level_ids.include?(l.id) %>
+						  <%= l.name %><br>
+						<% end %>
+					
+				</div>
 			</div>	
 			<div class="form-group">
 				<div class="control-label col-md-2">
@@ -55,7 +68,7 @@
       </div>
 		<% end %>
 		<div class="col-md-4 col-md-offset-4 colormatch">
-     		 [ <%= link_to "Cancel request and return to Companies listing", company_path %> ]
+     		 [ <%= link_to "Cancel request and return to Companies listing", company_path(@company) %> ]
     </div>
 	</div>
 </div>

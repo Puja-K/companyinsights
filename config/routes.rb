@@ -15,6 +15,11 @@ Rails.application.routes.draw do
 
   end
 
+  resources :companies do
+    resources :internal_levels
+
+  end
+
   resources :positions do
   	collection do
   		get 'search'
