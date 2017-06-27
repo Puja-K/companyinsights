@@ -248,21 +248,12 @@ input[type="text"], input[type="password"], select {
   min-height: 50px;
   width: 100%;
   height: auto;
-  background:#f1f1f1;
-  padding: 20px 0px 9px;
+  background:#313335;
+  padding: 13px 0px 6px;
 }
-.footer_icon span {
-  height: 30px;
-  width: 34px;
-  border: 2px solid #fff;
-  border-radius: 100%;
-  margin-right: 10px;
-  /* padding: 5px 10px; */
-  text-align: center;
-  padding: 7px 11px;
-}
+
 .footer a {
-  color:#fff;
+  color:#000;
 }
 .container1 {
   width:85% !important;
@@ -277,8 +268,51 @@ input[type="text"], input[type="password"], select {
   font-size:13px;
 }
 .footer_col {
-  width:33.33%;
+    width: 20%;
+    float: none;
+    margin: auto;
+    text-align: center;
+}
+
+.facebook {
+    background-image: asset-data-url('fb_nonactive.png');
+    height: 50px;
+    width: 50px;
   float:left;
+}
+.twitter{
+    background-image: asset-data-url('twitter_nonactive.png');
+    height: 50px;
+    width: 50px;
+  float:left;
+  margin-left: 6px
+}
+.youtube {
+    background-image: asset-data-url('youtube_nonactive.png');
+    height: 50px;
+    width: 50px;
+  float:left;
+  margin-left: 6px
+}
+.linked-in {
+    background-image: asset-data-url('linkedin_nonactive.png');
+    height: 50px;
+    width: 50px;
+  float:left;
+  margin-left: 6px
+}
+.facebook:hover{
+    background-image: asset-data-url('fb_active.png');
+}
+.twitter:hover{
+    background-image: asset-data-url('twitter_active.png');
+}
+.youtube:hover {
+    background-image: asset-data-url('youtube_active.png');
+}
+.linked-in:hover {
+    background-image: asset-data-url('linkedin_active.png');
+
 }
 
 /*nav css*/

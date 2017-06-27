@@ -1,0 +1,75 @@
+// Place all the styles related to the Sessions controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.login_form {
+    width: 50%;
+    margin: 0px auto 60px;
+    min-height: 450px;
+	    padding-top: 70px;
+}
+.login {
+    width: 67%;
+    margin: 17px auto 17px;
+}
+
+.login-logo {
+    width: 23%;
+    text-align: center;
+    margin: auto;
+}
+
+.form_row {
+    width: 100%;
+    margin-bottom: 10px;
+}
+.login input[type="email"], .login input[type="password"] {
+    padding: 12px;
+    -webkit-box-shadow: -1px -1px 8px 1px rgba(240,240,240,1);
+    -moz-box-shadow: -1px -1px 8px 1px rgba(240,240,240,1);
+    box-shadow: -1px -1px 8px 1px rgba(240,240,240,1);
+}
+.signin{
+	font-size: 26px;
+    color: #707070;
+    width: 68%;
+    margin: auto;
+	margin-top: 33px;
+}
+.signup_link{
+	color:#2c2c2c;
+}
+.signup_link a{
+	color:#428bca;
+}
+.signup_link a:hover{
+	color:#428bca;
+}
+
+ .loginbtn{
+	 background-image: asset-data-url('date-icon.png');
+    background-repeat: no-repeat;
+    background-position: 98%;
+	height:45px;
+	border-radius:2px;
+	background-color:#2c2c2c;	
+	margin-top:15px;
+	width:100%;
+	text-align:left;
+ }
+  .loginbtn:hover{
+background-color:#2c2c2c;	
+ }
+.linkedinbtn{
+	background-image: asset-data-url("date-icon.png");
+    background-repeat: no-repeat;
+    background-position: 98%;
+	background-color:#0177b5;
+	color:#fff;
+}
+.linkedinbtn:hover{
+	background-color:#0177b5;
+	color:#fff;
+}
+
+/* ----------------------------end login page------------------------------------- */

@@ -3,8 +3,18 @@
 <% provide(:title, 'Sign up') %>
 <% provide(:button_text, 'Create my account') %>
 <h1>Sign up</h1>
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= render 'form' %>
-  </div>
+<div class="login_form">
+	<div class="login">
+		<form>
+			<div class="form_row">
+          		<%= link_to 'SIGN UP WITH LINKEDIN', '/auth/linkedin', class: "btn btn-green loginbtn linkedinbtn" %>
+          	</div>
+		</form>
+	</div>
+	<h2 class="signin">Or</h2>
+  	<div class="login">
+    	<%= render 'form' %>
+ 	 </div>
+
 </div>
+
