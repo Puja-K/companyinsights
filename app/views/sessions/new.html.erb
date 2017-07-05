@@ -14,21 +14,22 @@
   <div class="login">
     <%= form_for(:session, url: login_path) do |f| %>
       <div class="form_row">
-        <%= f.email_field :email, placeholder: "Email"%>
+        <%= f.text_field :email, placeholder: "Email"%>
       </div>
-      <div class="form_row">
-      <%= link_to "(forgot password)", new_password_reset_path %>
-      </div>
+      
       <div class="form_row">
       <%= f.password_field :password, placeholder: 'Password' %>
       </div>
       <div class="form_row">
-      <%= f.label :remember_me, class: "checkbox inline" do %>
+      <%= f.label :remember_me, class: "remember" do %>
         <%= f.check_box :remember_me %>
 
-        <span>Remember me on this computer</span>
+        <span class="remember">Remember me on this computer</span>
+        <% end %>
+         <p class="signup_link"  style="float:right;"><%= link_to "(forgot password)", new_password_reset_path %></p>
         </div>
-      <% end %>
+      
+
       <div class="form_row">
         <%= f.submit "SIGN IN", class: "btn btn-green loginbtn" %>
       </div>
