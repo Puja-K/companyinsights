@@ -1,13 +1,26 @@
 class CompaniesController < ApplicationController
 
 	before_action :set_company, only: [:show, :edit, :update]
-	def index
-		@companies = Company.all
-	end
+	#def index
+	#	@companies = Company.all
+	#end
 
+	def index
+		if params[:term]
+    		@companies = Company.order(:name).where("name like ?", "%#{params[:term]}%")
+    		render json: @companies.map(&:name)
+
+    	else
+    		@companies = Company.all
+    		
+    	end
+
+  	end
+	
 	def show
 		
 	end
+
 
 
 	def search

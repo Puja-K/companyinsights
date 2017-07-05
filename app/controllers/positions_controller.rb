@@ -4,18 +4,41 @@ class PositionsController < ApplicationController
 	before_action :set_position, only: [:update, :edit]
 	
 
+
 	def search
-		if params[:company].present? && params[:search_position].present?
+		if params[:search_company].present? && params[:search_position].present?
+
+			@company = Company.find_by_name(params[:search_company])
 
 			#query = Company.joins(:positions).where('positions.title' => params[:search_position]) 
-			@positions = Position.search(params[:search_position], fields: [:title], load: false, where: {company_id: params[:company][:company_id]})
-			#@positions = Company.search query
+			@results = Position.search(params[:search_position], fields: [{title: :exact}], load: false, where: {company_name: params[:search_company]})
+			puts @results.size
+			position = @results.first
+			@results.each do |position|
+				puts position.title
+  				puts position.company_name
+  				puts position.internal_levels
+
+			end
+			
 		else
 			flash[:success] = "Sorry search returned 0 results"
 			redirect_to root_url
 
 		end
 	end
+
+	def autocomplete
+    render json: Position.search(params[:search_position], {
+      fields: ["title"],
+      match: :word_start,
+      limit: 10,
+      load: false,
+      misspellings: {below: 5}
+    }).map(&:title)
+  end
+
+
 
 	def new
 		@position = Position.new

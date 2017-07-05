@@ -10,5 +10,17 @@ class Position < ApplicationRecord
 	#has_many :companies, through: :internal_levels
 	belongs_to :company
 
-	searchkick
+	searchkick word_start: [:title]
+	scope :search_import, -> { includes(:company, :internal_levels) }
+
+	
+
+	def search_data
+	    attributes.merge(
+	      title: title,
+	      company_name: company.try(:name),
+	      description: description,
+	      internal_levels: "#{internal_levels.map(&:name).join(" ")}"
+	    )
+	end
 end

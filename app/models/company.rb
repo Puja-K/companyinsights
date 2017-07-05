@@ -6,12 +6,16 @@ class Company < ApplicationRecord
 	has_many :internal_levels
 	#has_many :positions, through: :internal_levels
 	validate  :picture_size
-	has_many :positions
+	has_many :positions, dependent: :destroy
 
-	searchkick
+	#searchkick 
 
 	
+	after_commit :reindex_position
 
+  def reindex_position
+    position.reindex # or reindex_async
+  end
 
 	private
 

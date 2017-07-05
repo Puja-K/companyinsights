@@ -12,7 +12,10 @@
 //
 //= require rails-ujs
 //= require jquery
+//= require jquery-ui/widgets/autocomplete
+//= require typeahead.bundle
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require turbolinks
 //= require_tree .
+

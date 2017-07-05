@@ -23,9 +23,11 @@ Rails.application.routes.draw do
   resources :positions do
   	collection do
   		get 'search'
+      get :autocomplete 
   	end
   end
 
+  
   
   get '/signup', to: 'users#new'
   post '/signup', to: 'users#create'

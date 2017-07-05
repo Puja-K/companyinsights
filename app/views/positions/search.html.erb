@@ -1,39 +1,173 @@
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= form_tag search_positions_path, method: :get, class: "form-inline" do %>
-        <p>
-          <%= collection_select(:company, :company_id, Company.all, :id, :name, {class: "form-control" }) %>
+<div class="infomation">
+  <div class="fillDetails filldetails1">
+  <div class="container">
+  <%= form_tag search_positions_path, method: :get do %>
+    <div class="form_row">
+      <div class="form_element">
+
           
-          <%= text_field_tag :search_position, params[:search_position], class: "form-control", placeholder: "Position you are interested in" %>
-          <%= submit_tag "Search", name: nil, class: " form-control btn btn-default"%>
-
-        </p>
-      <% end %>
+            <%= text_field_tag :search_company, params[:company], data: { autocomplete_source: companies_path}, class: "text-box text-box2", placeholder: "Search jobs by company" %>
+            <%= text_field_tag :search_position, params[:search_position], class: "text-box text-box3",
+             placeholder: "Search jobs by title" %>
+      <%= submit_tag "Search", name: nil, class: " btn btn-green btn-search"%>
+            
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <% end %>
   </div>
-</div>
+  </div>
+    <div class="container">
+  <div class="company_info">
+        <div class="company_logo"><%= image_tag @company.picture.url if @company.picture? %></div>
+        <div class="company_name"><%= link_to @company.name%></div>
+        <div class="clearfix"></div>
+      </div>
+      <div class="Section1">
+        <div class="col-md-12 nopadding">
+          <div class="col-md-6 nopadding">
+            <div class="jobInfo">
+              <div class="googleAdds1">
+                <div class="ads profile_level"> Job profile Level
+                <p>
+                  <%= @results[0].internal_levels %>
+                  </p>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="ads profile_level1"> Business title
+                <p><%= @results[0].title %></p>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="ads jobdesc"> Typical Job Desc
+                    <p><%= @results[0].description %></p>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 rightPadding">
+            <div class="ads orgChart">
+              <div class="tree">
+                <ul>
+                  <li> <a href="#">Parent</a>
+                    <ul>
+                      <li> <a href="#">Child</a>
+                        <ul class="grand-child">
+                          <li><a href="#">Grand Child</a></li>
+                          <li> <a href="#">Grand Child</a> </li>
+                          <li><a href="#">Grand Child</a></li>
+                          <li><a href="#">Grand Child</a></li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    <div class="HowItWorks">
+        <div class="col-md-12 nopadding">
+         <!--  <h2>Similar Position Company Name(option-1)</h2> -->
+          <div class="col-sm-3 col-md-3 nopadding">
+            <div class="ads ads1">
+              
+              <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="col-sm-3 col-md-3 nopadding">
+            <div class="ads ads1">
+              
+              <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="col-sm-3 col-md-3 nopadding">
+            <div class="ads ads1">
+             
+              <div class="clearfix"></div>
+            </div>
+          </div>
+          <div class="col-sm-3 col-md-3 nopadding">
+            <div class="ads ads1">
+              
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
 
-<%= render 'shared/page_title', title: "Search returned #{@positions.size} results"%>
 
-<table class="table table-hover table-condensed">
-  <thead>
-    <tr>
-      <th>Title </th>
-      <th>Job Description</th>
-      <th>Job Expectation </th>
-      <th> Avg Years Experience</th>
-      <th> Criteria for next level</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @positions.each do |position| %>
-      <tr>
-        <td> <%= link_to position.title, company_path(position.company_id) %> </td>
-        <td> <%= position.description %> </td>
-        <td> <%= position.job_expectation %> </td>
-        <td> <%= position.avg_yrs_exp %> </td>
-        <td> <%= position.criteria_for_next_level %> </td>
+      <div class="HowItWorks">
+        <div class="col-md-12 nopadding">
+          <h2>Similar Position Company Name</h2>
+          <div class="col-sm-3 col-md-3 nopadding">
+            <div class="ads ads1">
+              <div class="section_image1"> <img src="images/setting.png">
+                <div class="clearfix"></div>
+              </div>
+              <div class="section_text1">
+                <div class="heading"><a href="">dictionary</a></div>
+                <div class="heading-content"> It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable.</div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="col-sm-3 col-md-3 nopadding">
+            <div class="ads ads1">
+              <div class="section_image1"> <img src="images/setting.png">
+                <div class="clearfix"></div>
+              </div>
+              <div class="section_text1">
+                <div class="heading"><a href="">dictionary</a></div>
+                <div class="heading-content"> It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable.</div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="col-sm-3 col-md-3 nopadding">
+            <div class="ads ads1">
+              <div class="section_image1"> <img src="images/setting.png">
+                <div class="clearfix"></div>
+              </div>
+              <div class="section_text1">
+                <div class="heading"><a href="">dictionary</a></div>
+                <div class="heading-content"> It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable.</div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="col-sm-3 col-md-3 nopadding">
+            <div class="ads ads1">
+              <div class="section_image1"> <img src="images/setting.png">
+                <div class="clearfix"></div>
+              </div>
+              <div class="section_text1">
+                <div class="heading"><a href="">dictionary</a></div>
+                <div class="heading-content"> It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable.</div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
 
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+
+

@@ -4,9 +4,11 @@ class OauthsController < ApplicationController
 
   def create
     auth = request.env["omniauth.auth"]
-    user = User.find_by_provider_and_uid(auth["provider"], auth["uid"]) || User.create_with_omniauth(auth)
+    user = User.find_by_provider_and_uid(auth["provider"], auth["uid"]) 
       if user
         log_in user
+      else
+        User.create_with_omniauth(auth)
         broadcast(:create_new_company, auth)
       end
     redirect_to root_url, flash[:Success] => "Signed in!"

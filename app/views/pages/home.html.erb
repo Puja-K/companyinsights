@@ -5,14 +5,20 @@
       <p class="text">Making a Career Move?</p>
       <p class="text1" style="color:#4aa4ce">Get corporate insights here!</p>
       <div class="fillDetails">
-          <div class="form_row">
-          <div class="form_element">
-            <input type="text" placeholder="Company Name" class="text-box">
-            <input type="text" placeholder="Job Title"  class="text-box1">
-            <button class="btn btn-green" style="float:right;padding: 6px 25px;">Search</button>
+         <%= form_tag search_positions_path, method: :get do %>
+    <div class="form_row">
+      <div class="form_element">
+
+          
+            <%= text_field_tag :search_company, params[:company], data: { autocomplete_source: companies_path}, class: "text-box", placeholder: "Search jobs by company" %>
+            <%= text_field_tag :search_position, params[:search_position], class: "text-box1", placeholder: "Search jobs by title" %>
+      <%= submit_tag "Search", name: nil, class: " btn btn-green btn-search"%>
+      
+            
           </div>
           <div class="clearfix"></div>
         </div>
+        <% end %>
       </div>
     </div>
     <div class="clearfix"></div>
