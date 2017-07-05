@@ -3,6 +3,15 @@
 <div class="login_form">
   <h2 class="signin">LOG IN</h2>
   <div class="login">
+        <form>
+          <div class="form_row">
+          <%= link_to 'CONTINUE WITH LINKEDIN', '/auth/linkedin', class: "btn btn-green loginbtn linkedinbtn" %>
+            
+          </div>
+        </form>
+      </div>
+      <h2 class="signin">Or</h2>
+  <div class="login">
     <%= form_for(:session, url: login_path) do |f| %>
       <div class="form_row">
         <%= f.email_field :email, placeholder: "Email"%>
@@ -26,14 +35,7 @@
     <% end %>
     <p class="signup_link">Don't have an account? <%= link_to " Sign up", signup_path %></p>
   </div>
-  <h2 class="signin">Or</h2>
-  <div class="login">
-        <form>
-          <div class="form_row">
-          <%= link_to 'CONTINUE WITH LINKEDIN', '/auth/linkedin', class: "btn btn-green loginbtn linkedinbtn" %>
-            
-          </div>
-        </form>
-      </div>
+  
+  
 </div>
 
