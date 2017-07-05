@@ -11,11 +11,7 @@ class Company < ApplicationRecord
 	#searchkick 
 
 	
-	after_commit :reindex_position
-
-  def reindex_position
-    position.reindex # or reindex_async
-  end
+	
 
 	private
 
