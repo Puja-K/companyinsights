@@ -8,10 +8,11 @@ class PositionsController < ApplicationController
 	def search
 		if params[:search_company].present? && params[:search_position].present?
 
-			@company = Company.find_by_name(params[:search_company])
+			#@company = Company.find_by_name(params[:search_company])
+			@company = Company.where('lower(name)= ?', params[:search_company].downcase).first
 
 			#query = Company.joins(:positions).where('positions.title' => params[:search_position]) 
-			@results = Position.search(params[:search_position], fields: [{title: :exact}], load: false, where: {company_name: params[:search_company]})
+			@results = Position.search(params[:search_position], fields: [:title], load: false, where: {company_id: @company.id})
 			puts @results.size
 			position = @results.first
 			@results.each do |position|
