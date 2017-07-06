@@ -6,9 +6,9 @@
       <div class="form_element">
 
           
-            <%= text_field_tag :search_company, params[:company], data: { autocomplete_source: companies_path}, class: "text-box text-box2", placeholder: "Search jobs by company" %>
+            <%= text_field_tag :search_company, params[:company], data: { autocomplete_source: companies_path}, class: "text-box text-box2", placeholder: "Company Name" %>
             <%= text_field_tag :search_position, params[:search_position], class: "text-box text-box3",
-             placeholder: "Search jobs by title" %>
+             placeholder: "Position/Title" %>
       <%= submit_tag "Search", name: nil, class: " btn btn-green btn-search"%>
             
           </div>
