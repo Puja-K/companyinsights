@@ -21,6 +21,9 @@ class PositionsController < ApplicationController
   				puts position.internal_levels
 
 			end
+		elsif params[:search_company].present? && !params[:search_position].present?
+			@company = Company.where('lower(name)= ?', params[:search_company].downcase).first
+			puts "ONLY COMPANY NO POSITION"
 			
 		else
 			flash[:success] = "Sorry search returned 0 results"

@@ -216,4 +216,26 @@ right connector from last child*/
 
 /* ----------------------------end-org chart---------------------------------------------------------------------------------------------------- */
 
+.listing{
+	float:left;
+	text-align:left;
+	border-bottom: 1px solid #d4d4d4;
+    width: 100%;
+	padding: 17px 0px;
+}
 
+.pageing {
+    text-align: right;
+    padding: 0px 8px;
+}
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+    background-color: #313335;
+    border-color: #edf8f0;
+}
+.pagination > li > a, .pagination > li > span, .pagination > .disabled > span, .pagination > .disabled > span:hover, .pagination > .disabled > span:focus, .pagination > .disabled > a, .pagination > .disabled > a:hover, .pagination > .disabled > a:focus {
+    border-color: #edf8f0;
+    color: #888;
+}
+.pagination > li > a:hover, .pagination > li > span:hover, .pagination > li > a:focus, .pagination > li > span:focus {
+    background-color: #edf8f0;
+}
