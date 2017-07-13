@@ -1,3 +1,4 @@
+@import "font-awesome";
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
@@ -11,7 +12,7 @@
 body {
   padding:0px;
   margin:0px;
-  color:#ececec;
+  color:#000;
   font-size:15px;
   background:#fff !important;
   font-family: 'Montreal'!important;
@@ -1042,7 +1043,18 @@ background-color:#2c2c2c;
 }
 }
 
+.table{color:#000;
+text-align: center;}
 
+
+.action-btn {
+    padding: 5px;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    background: #313335;
+    margin: 0px 3px;
+}
 
 /* Users index */
 

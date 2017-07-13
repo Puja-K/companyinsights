@@ -5,6 +5,6 @@ class Band < ApplicationRecord
   after_commit :reindex_position
 
   def reindex_position
-    position.reindex # or reindex_async
+    Position.reindex # or reindex_async
   end
 end

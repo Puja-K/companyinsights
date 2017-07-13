@@ -11,7 +11,7 @@ class CompaniesController < ApplicationController
     		render json: @companies.map(&:name)
 
     	else
-    		@companies = Company.all
+    		@companies = Company.paginate(page: params[:page], per_page: 10)
     		
     	end
 
@@ -24,13 +24,11 @@ class CompaniesController < ApplicationController
 
 
 	def search
-		if params[:search_company].present? && params[:search_position].present?
-
-			query = Company.joins(:positions).where('positions.title' => params[:search_position]) 
-			#@positions = Company.search(params[:search_company], where: {title: params[:search_position]})
-			@positions = Company.search query
+		if params[:search_company].present?
+			@companies= Company.search params[:search_company], fields: [:name]
+			render 'index'
 		else
-			@positions = Company.first.positions.all
+			@companies = Company.paginate(page: params[:page], per_page: 10)
 
 		end
 	end

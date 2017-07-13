@@ -14,7 +14,11 @@ class Position < ApplicationRecord
 
 	searchkick 
 	scope :search_import, -> { includes(:company, :internal_levels) }
+	after_commit :reindex_position
 
+	  def reindex_position
+	    Position.reindex # or reindex_async
+	  end
 	
 
 	def search_data

@@ -54,6 +54,8 @@ gem 'fog',                     '1.40.0'
 
 gem 'wisper', '~> 2.0.0'
 
+gem 'font-awesome-rails' , '4.7.0.2'
+
 group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
