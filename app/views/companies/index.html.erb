@@ -2,15 +2,15 @@
 
   <div class="infomation">
     <div class="container">
-      <h1>Companies</h1>
+      
       <div class="section-heading" style="padding-bottom:0px;">
-       <%= form_tag search_companies_path, method: :get do %>
-          <%= text_field_tag :search_company, params[:company], class: "pull-left search-text", placeholder: "Search" , style: {width: "341px", "margin-right": "10px" }%>
+      <h1 class="pull-left">Companies</h1>
+      <div class="pull-right">
+      <%= form_tag search_companies_path, method: :get do %>
+          <%= text_field_tag :search_company, params[:company], class: "search-text", placeholder: "Search"%>
       <% end %>
-        <span class="pull-right" style="margin-top:-5px;"> <a href="#">
-        
-        <%= link_to 'Add company', new_company_path, class:" btn btn-green btn-search" %>
-        </a> </span>
+      <%= link_to 'Add company', new_company_path, class:" btn btn-green" %>
+      </div>
         <div class="clearfix"></div>
       </div>
       <div class="dashboard-row ads" style="margin:10px 0px;">
