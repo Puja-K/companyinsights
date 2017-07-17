@@ -1,16 +1,51 @@
-<%= render 'shared/page_title', title: 'Update your profile' %>
-<%= render'shared/errors', object: @user %>
 
 
-<% provide(:title, 'Edit user') %>
-<% provide(:button_text, 'Save changes') %>
-
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= render 'form' %>
-    <div class="gravatar_edit">
-      <%= gravatar_for @user %>
-      <a href="http://gravatar.com/emails" target="_blank">Change</a>
-    </div>
-  </div>
-</div>
+<div class="login_form">
+			<%= form_for(@user) do |f| %>
+			<h2 class="signin update1">Update Your Profile</h2>
+			<div class="col-md-4">
+			<div class="form_row">
+				<div class="form_element" style="">
+					<span class="upload_file">
+						<div class="file_container">
+						<%= image_tag @user.picture.url if @user.picture? %>
+							<%= f.file_field :picture %>
+						</div>
+					</span>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			
+			</div>
+			<div class="col-md-8">
+			<div class="login login1">
+				
+  <%= render 'shared/errors', object: @user %>
+					<div class="form_row">
+						<%= f.text_field :name, placeholder: "Full Name", id: "user_name" %>
+						
+					</div>
+					<div class="form_row">
+						 <%= f.text_field :email, placeholder: "Email Address", id: "user_email" %>
+						
+					</div>
+					<div class="form_row">
+						<%= f.password_field :password, placeholder: "Password" , id: "user_password"%>
+						
+					</div>
+					<div class="form_row">
+						<%= f.password_field :password_confirmation, placeholder: "Confirm Password", id: "user_password_confirmation"%>
+						
+					</div>
+					
+					<div class="form_row">
+						 <%= f.submit "Submit", class: "btn btn-green loginbtn" %>
+						
+					</div>
+				
+			</div>
+			</div>
+			
+		<% end %>
+			
+		</div>

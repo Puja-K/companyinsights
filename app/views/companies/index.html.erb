@@ -7,7 +7,7 @@
       <h1 class="pull-left">Companies</h1>
       <div class="pull-right">
       <%= form_tag search_companies_path, method: :get do %>
-          <%= text_field_tag :search_company, params[:company], class: "search-text", placeholder: "Search"%>
+          <%= text_field_tag :search_company, params[:company], class: "search-text search-text1", placeholder: "Search"%>
       <% end %>
       <%= link_to 'Add company', new_company_path, class:" btn btn-green" %>
       </div>

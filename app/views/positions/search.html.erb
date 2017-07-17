@@ -120,7 +120,9 @@
         </div>
         <div class="clearfix"></div>
       </div>
+        <% if @results.nil? %>
           <%= will_paginate @PositionPaginator %>
+        <% end %>
         <div class="clearfix"></div>
 
 
