@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170719181153) do
+ActiveRecord::Schema.define(version: 20170724220742) do
 
   create_table "bands", force: :cascade do |t|
     t.integer "position_id"
@@ -94,6 +94,7 @@ ActiveRecord::Schema.define(version: 20170719181153) do
     t.integer "oauth_id"
     t.string "uid"
     t.string "picture"
+    t.datetime "last_login"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

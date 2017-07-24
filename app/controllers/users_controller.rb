@@ -23,7 +23,7 @@ class UsersController < ApplicationController
 	end
 
 	def index
-		@users = User.paginate(page: params[:page])
+		@users = User.paginate(page: params[:page], per_page: 10)
   	end
 
 	def show
@@ -60,7 +60,27 @@ class UsersController < ApplicationController
 	    redirect_to users_url
 	end
 
-
+	def update_multiple
+		#User.destroy_all(id: params[:user_ids])
+		#flash.now[:success] = "Successfully Deleted !!"
+	    #redirect_to users_url
+	    if params[:commit] == 'Delete'
+	    	puts "*** Delete Action ***"
+	    	if User.where(id: params[:user_ids]).destroy_all
+	    		flash[:success] = "Successfully Deleted !!"
+	    	else
+	    		flash[:error] = "Could not delete, something went wrong "
+	    	end
+	    elsif params[:commit] == 'Activate'
+	    	puts "*** Activate Action ***"
+	    	if User.where(id: params[:user_ids]).update_all(activated: true)
+	    		flash[:success] = "Successfully Activated !!"
+	    	else
+	    		flash[:error] = "Could not Activate, something went wrong "
+	    	end
+	    end
+	    redirect_to users_url
+	end
 
 	private
 	def user_params

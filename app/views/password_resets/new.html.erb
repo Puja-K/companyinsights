@@ -2,6 +2,7 @@
 
 
 <div class="login_form">
+<%= render 'layouts/messages' %>
 	<h2 class="signin">Enter your email to reset password</h2>
 	<div class="login">
 	    <%= form_for(:password_reset, url: password_resets_path) do |f| %>

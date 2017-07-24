@@ -1,12 +1,53 @@
 <% provide(:title, 'All users') %>
-<h1>All users</h1>
 
-<%= will_paginate %>
 
-<ul class="users">
-  <% @users.each do |user| %>
-     <%= render user %>
-  <% end %>
-</ul>
 
-<%= will_paginate %>
+ <div class="infomation">
+    <div class="container">
+    <%= render 'layouts/messages' %>
+      <div class="section-heading" style="padding-bottom:0px;">
+      <h1 class="pull-left">Users</h1>
+      
+        <div class="clearfix"></div>
+      </div>
+      <div class="dashboard-row ads" style="margin:10px 0px;">
+      	<%= form_tag update_multiple_users_path do %>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+             <th style="width:2%;text-align: center;"><a href="">Select All</a></th>
+              <th style="text-align: center;width: 10%;">Profile_pic</th>
+              <th style="text-align: center;">User Name</th>
+              <th style="text-align: center;">Full Name</th>
+              <th style="text-align: center;">Created On</th>
+              <th style="text-align: center;">Activated</th>
+              <th style="text-align: center;">Admin</th>
+              <th style="text-align: center;">LastLogin</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @users.each do |user| %>
+              <tr>
+                <%= render user %>
+              </tr>
+            <% end %>
+            
+          </tbody>
+        </table>
+        <%= will_paginate @users %>
+        <div class="clearfix"></div>
+        <% if current_user.admin? %>
+	        <div class="bottom_btns">
+	          <div class="cancel"><%= submit_tag "Delete"%></div>
+	          <%= submit_tag "Activate", class:  "btn btn-green"%>
+	          <div class="clearfix"></div>
+	        </div>
+	    <% end %>
+        <div class="clearfix"></div>
+        <% end %>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+  <div class="clearfix"></div>
+  <div class="push"></div>

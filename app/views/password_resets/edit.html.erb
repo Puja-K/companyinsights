@@ -2,6 +2,7 @@
 <%= render 'shared/page_title', title: 'Reset Password' %>
 
 <div class="login_form">
+  <%= render 'layouts/messages' %>
   <h2 class="signin">Reset Password</h2>
   <div class="login">
     <%= form_for(@user, url: password_reset_path(params[:id])) do |f| %>
