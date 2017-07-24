@@ -30,8 +30,15 @@ Rails.application.routes.draw do
   	end
   end
 
+  #resources :users do
+    #resources :profiles
+ # end
   
+  resources :profiles
   
+  get '/users/:user_id/profile', to: 'profiles#edit'
+  post '/users/:user_id/profile', to: 'profiles#update'
+
   get '/signup', to: 'users#new'
   post '/signup', to: 'users#create'
   get    '/login',   to: 'sessions#new'

@@ -1,0 +1,64 @@
+
+
+
+<%= render 'layouts/messages' %>
+<div class="login_form">
+			<!-- <div class="login-logo">
+				<img src="images/logo.png">
+			</div> -->
+			<h2 class="signin update1">Update Your Profile</h2>
+			
+			<div class="login login1">
+				<%= form_for(@profile) do |user_form| %>
+				
+					<div class="form_row form_row1">
+					<div class="form_label">Where Do you Work?</div>
+					<%= fields_for @profile.company do |user_profile_company_form| %>
+						<div class="form_element"><%= user_profile_company_form.text_field :name, placeholder: "Company Name"%>
+					</div>
+					<% end %>
+					<div class="clearfix"></div>
+					</div>
+					<div class="form_row form_row1">
+					<div class="form_label">Position/Job Title</div>
+					<%= fields_for @profile.position do |user_profile_position_form| %>
+						<div class="form_element"><%= user_profile_position_form.text_field :title, placeholder: "Ex: Product Manager" %></div>
+					<% end %>
+					<div class="clearfix"></div>
+					</div>
+					<div class="form_row  form_row1">
+
+					<div class="form_label">Internal Career Level<p class="label_info">(if different than Position)?</p></div>
+					<%= fields_for @profile.internal_level do |user_profile_internal_level_form| %>
+						<div class="form_element"><%= user_profile_internal_level_form.text_field :name, placeholder: "Ex: Level 5" %></div>
+					<% end %>
+					<div class="clearfix"></div>
+					</div>
+					<div class="form_row  form_row1">
+					<div class="form_label">Who do you report to?</div>
+					<div class="form_element"><input type="text" placeholder=""></div>
+					<div class="clearfix"></div>
+					</div>
+					<div class="form_row  form_row1">
+					<div class="form_label">Who reports to you?</div>
+					<div class="form_element"><input type="text" placeholder=""></div>
+					<div class="clearfix"></div>
+					</div>
+					<div class="form_row form_row1">
+					<div class="form_label">What will get you promoted to the last level?</div>
+					<div class="form_element">
+					<%= user_form.text_area :promotion_criteria %>
+					</div>
+					<div class="clearfix"></div>
+					</div>
+					
+					<div class="bottom_btns1">
+						<div class="cancel cancel1"><%= link_to "Cancel", root_path %></div>
+						
+						<%= user_form.submit "Submit", class: "btn btn-green edit1" %>
+						<div class="clearfix"></div>
+					</div>
+				<% end %>
+			</div>			
+			
+</div>

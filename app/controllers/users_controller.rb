@@ -5,6 +5,7 @@ class UsersController < ApplicationController
 
 	def new
 		@user = User.new
+		@profile = @user.build_profile
 	end
 
 	def create
@@ -27,6 +28,15 @@ class UsersController < ApplicationController
 
 	def show
     @user = User.find(params[:id])
+	    if @user.profile.nil?
+	    	profile = @user.build_profile
+	    	if profile.save
+	    		@user.profile = profile
+	    	else
+	    		puts "PROFILE NOT SUCCESSFUL "
+	    	end
+
+	    end
   	end
 
   	def edit

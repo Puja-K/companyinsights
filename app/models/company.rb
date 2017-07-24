@@ -1,13 +1,13 @@
 class Company < ApplicationRecord
 
 	validates :name, presence: true, uniqueness: { case_sensitive: false }
-	validates :company_type, presence: true
+	#validates :company_type, presence: true
 	mount_uploader :picture, PictureUploader
 	has_many :internal_levels, dependent: :destroy
 	#has_many :positions, through: :internal_levels
 	validate  :picture_size
 	has_many :positions, dependent: :destroy
-
+	has_many :profiles
 	searchkick 
 
 	

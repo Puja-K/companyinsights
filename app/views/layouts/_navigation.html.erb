@@ -19,7 +19,7 @@
               <%=current_user.name%> <b class="caret"></b>
             </a>
             <ul class="subs">
-              <li><%= link_to "Profile", current_user %></li>
+              <li><%= link_to "Profile", "/users/#{current_user.id}/profile" %></li>
               <li><%= link_to "Settings", edit_user_path(current_user) %></li>
               <li class="divider"></li>
               <li>

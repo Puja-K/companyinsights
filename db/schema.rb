@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170717173207) do
+ActiveRecord::Schema.define(version: 20170719181153) do
 
   create_table "bands", force: :cascade do |t|
     t.integer "position_id"
@@ -61,6 +61,20 @@ ActiveRecord::Schema.define(version: 20170717173207) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "company_id"
+  end
+
+  create_table "profiles", force: :cascade do |t|
+    t.text "promotion_criteria"
+    t.integer "user_id"
+    t.integer "company_id"
+    t.integer "position_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "internal_level_id"
+    t.index ["company_id"], name: "index_profiles_on_company_id"
+    t.index ["internal_level_id"], name: "index_profiles_on_internal_level_id"
+    t.index ["position_id"], name: "index_profiles_on_position_id"
+    t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

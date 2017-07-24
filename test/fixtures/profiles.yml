@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  promotion_criteria: MyText
+  user: one
+  company: one
+  position: one
+  internal_levels: one
+
+two:
+  promotion_criteria: MyText
+  user: two
+  company: two
+  position: two
+  internal_levels: two
