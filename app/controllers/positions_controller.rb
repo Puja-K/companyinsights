@@ -12,7 +12,7 @@ class PositionsController < ApplicationController
 			@company = Company.where('lower(name)= ?', params[:search_company].downcase).first
 
 			#query = Company.joins(:positions).where('positions.title' => params[:search_position]) 
-			@results = Position.search(params[:search_position], fields: [:title], load: false, where: {company_id: @company.id})
+			@results = Position.search(params[:search_position], fields: [:title], match: :word_start, load: false, where: {company_id: @company.id})
 			puts @results.size
 			position = @results.first
 			@results.each do |position|
@@ -34,12 +34,14 @@ class PositionsController < ApplicationController
 
 	def autocomplete
     render json: Position.search(params[:search_position], {
-      fields: ["title"],
+      fields: ["title^5"],
       match: :word_start,
       limit: 10,
       load: false,
       misspellings: {below: 5}
-    }).map(&:title)
+    }).map do |position|
+    	{title: position.title, value: position.id}
+    end
   end
 
 

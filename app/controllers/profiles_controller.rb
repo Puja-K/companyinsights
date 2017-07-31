@@ -19,6 +19,10 @@ class ProfilesController < ApplicationController
 
 	end
 
+	def show
+		@profile = Profile.find(params[:id])
+	end
+
 	def update
 		@profile = Profile.find(params[:id])
 		company = Company.find_by(name: params[:company][:name])
@@ -28,17 +32,31 @@ class ProfilesController < ApplicationController
 			company = Company.create!(name: params[:company][:name])
 			if company.persisted?
 				puts "Compny saved, now creating the position"
-				internal_level = company.internal_levels.create!(name: params[:internal_level][:name])
+				@profile.company = company
 				position = company.positions.create!(title: params[:position][:title])
+				
+				if params[:internal_level].present? && !params[:internal_level][:name].blank?
+					internal_level = company.internal_levels.create!(name: params[:internal_level][:name])
+					position.internal_levels << internal_level 
+					@profile.internal_level = internal_level
+				elsif params[:internal_level].present? && params[:internal_level][:name].blank?
+					@profile.internal_level = nil
+				end
+				if params[:name].present? && !params[:name].blank?
+					internal_level = company.internal_levels.create!(name: params[:name])
+					position.internal_levels << internal_level 
+					@profile.internal_level = internal_level
+				elsif params[:name].present? && params[:name].blank?
+					@profile.internal_level = nil
+				end
 				@profile.position = position
-				position.internal_levels << internal_level 
 				if @profile.update_attributes(profile_params)
 					puts "*** Horray profile sucessfully UPDATED !! ***"
 			      # Handle a successful update.
-			      	flash.now[:success] = "Profile updated"
+			      	flash[:success] = "Profile updated !!"
 			      	#redirect_to @user
 			    else
-			      render 'edit'
+			      redirect_to "/users/#{current_user.id}/profile" 
 			    end
 				#@profile = @user.build_profile(company_id: company.id, position_id: position.id, internal_level_id: internal_level.id)
 				#if params[:profile][:promotion_criteria].present?
@@ -49,43 +67,75 @@ class ProfilesController < ApplicationController
 			
 		else
 			puts "*** EXISTING COMPANY !!!"
-			internal_level = company.internal_levels.find_or_create_by(name: params[:internal_level][:name])
+			@profile.company = company
 			position = company.positions.find_by(title: params[:position][:title])
 			puts position.nil?
 			if position.nil?
 				puts "Creating a new position"
 				position = company.positions.create!(title: params[:position][:title])
-				position.internal_levels << internal_level 
+				if params[:internal_level].present? && !params[:internal_level][:name].blank?
+					internal_level = company.internal_levels.find_or_create_by(name: params[:internal_level][:name])
+					position.internal_levels << internal_level 
+					@profile.internal_level = internal_level
+				elsif params[:internal_level].present? && params[:internal_level][:name].blank?
+					@profile.internal_level = nil
+				end
+				if params[:name].present? && !params[:name].blank?
+					internal_level = company.internal_levels.find_or_create_by(name: params[:name])
+					position.internal_levels << internal_level 
+					@profile.internal_level = internal_level
+				elsif params[:name].present? && params[:name].blank?
+					@profile.internal_level = nil
+				end
 				@profile.position = position
 				if @profile.update_attributes(profile_params)
 					puts "*** Horray profile sucessfully UPDATED !! ***"
 			      # Handle a successful update.
-			      	flash.now[:success] = "Profile updated"
+			      	flash[:success] = "Profile updated!!"
 			      	#redirect_to @user
 			    else
-			      render 'edit'
+			      redirect_to "/users/#{current_user.id}/profile" 
 			    end
 			
 			else
 				puts "*** Position already exists !!"
-				internal_level = company.internal_levels.find_or_create_by(name: params[:internal_level][:name])
 				@profile.position = position
-				if !position.internal_levels.exists?(internal_level.id)
+				if params[:internal_level].present? && !params[:internal_level][:name].blank?
+					internal_level = company.internal_levels.find_or_create_by(name: params[:internal_level][:name])
+					if !position.internal_levels.exists?(internal_level.id)
 					puts "**Adding the internal level to this position since it does not exists!!!! **"
 					position.internal_levels << internal_level
-				end 
+					@profile.internal_level = internal_level
+					end 
+				elsif params[:internal_level].present? && params[:internal_level][:name].blank?
+					@profile.internal_level = nil
+				end
+					
+				if params[:name].present? && !params[:name].blank?
+					internal_level = company.internal_levels.find_or_create_by(name: params[:name])
+					if !position.internal_levels.exists?(internal_level.id)
+					puts "**Adding the internal level to this position since it does not exists!!!! **"
+					position.internal_levels << internal_level
+					@profile.internal_level = internal_level
+					end 
+				elsif params[:name].present? && params[:name].blank?
+					@profile.internal_level = nil
+				end
+
 				if @profile.update_attributes(profile_params)
 					puts "*** Horray profile sucessfully UPDATED !! ***"
 			      # Handle a successful update.
-			      	flash.now[:success] = "Profile updated"
-			      	#redirect_to @user
+			      	flash[:success] = "Profile updated!!"
+			      	redirect_to "/users/#{current_user.id}/profile" 
+			      	return
 			    else
-			      render 'edit'
+			    	flash.now[:error] = "Could not update your profile"
+			      redirect_to "/users/#{current_user.id}/profile" 
 			    end
 
 			end
 		end
-		render 'edit'
+		redirect_to "/users/#{current_user.id}/profile" 
 	    
 	end
 
@@ -98,59 +148,78 @@ class ProfilesController < ApplicationController
 			company = Company.create!(name: params[:company][:name])
 			if company.persisted?
 				puts "Compny saved, now creating the position"
-				internal_level = company.internal_levels.create!(name: params[:name])
+				
 				position = company.positions.create!(title: params[:title])
-				position.internal_levels << internal_level 
-				@profile =@user.build_profile(company_id: company.id, position_id: position.id, internal_level_id: internal_level.id)
+				
+				
+				@profile =@user.build_profile(company_id: company.id, position_id: position.id)
+				if params[:internal_level].present? || params[:name].present? #:name is the level name
+					internal_level = company.internal_levels.create!(name: params[:name])
+					position.internal_levels << internal_level 
+					@profile.internal_level = internal_level
+				end
 				if params[:profile][:promotion_criteria].present?
-					@profile.promotion_criteria = params[:profile][:promotion_criteria] 
-				end	
+					@profile.promotion_criteria = params[:profile][:promotion_criteria]
+				end
+				
 				if @profile.save
 					flash.now[:success] = "Thank you for creating your profile !!"
 					puts "*** Horray profile sucessfully created ***"
-					#redirect_to user_profile_url(@user,@profile)
+					redirect_to "/users/#{@user.id}/profile"
 				end
 			end
 			
 		else
 			puts "*** EXISTING COMPANY !!!"
-			internal_level = company.internal_levels.find_or_create_by(name: params[:name])
 			position = company.positions.find_by(title: params[:title])
 			puts position.nil?
 			if position.nil?
 				puts "Creating a new position"
 				position = company.positions.create!(title: params[:title])
-				position.internal_levels << internal_level 
-				@profile =@user.build_profile(company_id: company.id, position_id: position.id, internal_level_id: internal_level.id)
+				@profile =@user.build_profile(company_id: company.id, position_id: position.id)
+				if params[:name].present? #:name is the internal level name
+					internal_level = company.internal_levels.find_or_create_by(name: params[:name])
+					position.internal_levels << internal_level 
+					@profile.internal_level = internal_level
+				end
 				if params[:profile][:promotion_criteria].present?
-					@profile.promotion_criteria = params[:profile][:promotion_criteria] 
-				end	
+					@profile.promotion_criteria = params[:profile][:promotion_criteria]
+				end
 				if @profile.save
 					puts "*** Horray profile sucessfully created ***"
-					flash.now[:success] = "Thank you for creating your profile !!"
-					#redirect_to user_profile_url(@user,@profile)
+					flash[:success] = "Thank you for creating your profile !!"
+					redirect_to "/users/#{@user.id}/profile"
 				end
 				#company.internal_levels.where(name: params[:name])
 			
 			else
 				puts "*** Position already exists !!"
-				internal_level = company.internal_levels.find_or_create_by(name: params[:name])
-				if !position.internal_levels.exists?(internal_level.id)
+				@profile =@user.build_profile(company_id: company.id, position_id: position.id)
+
+				if params[:name].present?
+					internal_level = company.internal_levels.find_or_create_by(name: params[:name])
+				
+					if !position.internal_levels.exists?(internal_level.id)
 					puts "**Adding the internal level to this position since it does not exists!!!! **"
 					position.internal_levels << internal_level
-				end 
-				@profile =@user.build_profile(company_id: company.id, position_id: position.id, internal_level_id: internal_level.id)
+					end 
+					@profile.internal_level = internal_level
+				end
 				if params[:profile][:promotion_criteria].present?
-					@profile.promotion_criteria = params[:profile][:promotion_criteria] 
-				end	
+					@profile.promotion_criteria = params[:profile][:promotion_criteria]
+				end
+
+				
+					
 				if @profile.save
 					puts "*** Horray profile sucessfully created ***"
 					flash.now[:success] = "Thank you for creating your profile !!"
-					#redirect_to user_profile_url(@user,@profile)
+					redirect_to "/users/#{@user.id}/profile"
 				end
 
 			end
 		end
+
 		
 	end
 
@@ -159,5 +228,6 @@ class ProfilesController < ApplicationController
 
 	def profile_params
 		params.require(:profile).permit(:promotion_criteria, :user_id, :company_id, :position_id, :internal_level_id)
+		
 	end
 end

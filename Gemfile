@@ -26,7 +26,6 @@ gem 'uglifier', '>= 1.3.0'
 #Use jquery as the javascript library
 gem 'jquery-rails'
 
-
 gem 'jquery-ui-rails'
 
 # Use CoffeeScript for .coffee assets and views

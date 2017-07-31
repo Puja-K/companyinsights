@@ -12,7 +12,7 @@ class Position < ApplicationRecord
 	#has_many :companies, through: :internal_levels
 	belongs_to :company
 
-	searchkick 
+	searchkick word_start: [:title]
 	scope :search_import, -> { includes(:company, :internal_levels) }
 	after_commit :reindex_position
 

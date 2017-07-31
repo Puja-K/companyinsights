@@ -21,7 +21,7 @@ private
       @user = User.new
       @user.provider = @auth_hash[:provider]
       @user.name = @auth_hash[:info][:name]
-      if user.save
+      if @user.save
         log_in @user
         redirect_to root_url
       else

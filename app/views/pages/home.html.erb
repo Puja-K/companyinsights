@@ -9,10 +9,11 @@
          <%= form_tag search_positions_path, method: :get do %>
     <div class="form_row">
       <div class="form_element">
-
-          
             <%= text_field_tag :search_company, params[:company], data: { autocomplete_source: companies_path}, class: "text-box", placeholder: "Company Name" %>
-            <%= text_field_tag :search_position, params[:search_position], class: "text-box1", placeholder: "Position/Title" %>
+            <%= text_field_tag :search_position, 
+                params[:search_position], 
+                placeholder: "Position/Title",
+                class: "text-box1" %>
       <%= submit_tag "Search", name: nil, class: " btn btn-green btn-search"%>
       
             

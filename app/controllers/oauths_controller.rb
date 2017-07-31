@@ -8,8 +8,9 @@ class OauthsController < ApplicationController
       if user
         log_in user
       else
-        User.create_with_omniauth(auth)
-        broadcast(:create_new_company, auth)
+        user = User.create_with_omniauth(auth)
+        log_in user 
+        broadcast(:create_new_company, auth, user)
       end
     redirect_to root_url, flash[:Success] => "Signed in!"
   end
