@@ -7,40 +7,45 @@
 
           
             <%= text_field_tag :search_company, params[:company], data: { autocomplete_source: companies_path}, class: "text-box text-box2", placeholder: "Company Name" %>
+              
             <%= text_field_tag :search_position, params[:search_position], class: "text-box1 text-box3",
-             placeholder: "Position/Title" %>
+             placeholder: "Position/Title", data: { autocomplete_source: positions_path}%>
       <%= submit_tag "Search", name: nil, class: " btn btn-green btn-search"%>
             
           </div>
           <div class="clearfix"></div>
         </div>
         <% end %>
+        <%= render 'layouts/messages' %>
   </div>
   </div>
     <div class="container">
-  <div class="company_info">
+      <div class="company_info">
         <div class="company_logo"><%= image_tag @company.picture.url if @company.picture? %></div>
         <div class="company_name"><%= link_to @company.name%></div>
         <div class="clearfix"></div>
       </div>
-      <% if !@results.nil? %>
+      <% if !@results.nil? && @results.size > 0%>
         <div class="Section1">
           <div class="col-md-12 nopadding">
             <div class="col-md-6 nopadding">
               <div class="jobInfo">
                 <div class="googleAdds1">
-                  <div class="ads profile_level"> Job profile Level
-                  <p>
-                    <%= @results[0].internal_levels %>
-                    </p>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="ads profile_level1"> Business title
-                  <p><%= @results[0].title %></p>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="ads jobdesc"> Typical Job Desc
-                      <p><%= @results[0].description %></p>
+                  <div class="ads profile_level"> 
+                      <div class="Ads_heading">Business Title</div>
+                      <div class="Ads_Data"><%= @results[0].title %></div>
+                       <div class="clearfix"></div>
+                    </div>
+                    <div class="ads profile_level" style="margin-left: 2%;"> 
+          
+                       <div class="Ads_heading">Job profile Level</div>
+                       <div class="Ads_Data"><%= @results[0].internal_levels %></div>
+                       <div class="clearfix"></div>
+                    </div>
+                    <div class="ads jobdesc"> 
+                    <div class="Ads_heading">Typical Job Desc</div>
+                    <div class="Ads_Data"><%= @results[0].description %></div>
+                      
                     <div class="clearfix"></div>
                   </div>
                   <div class="clearfix"></div>
@@ -85,6 +90,7 @@
               <% end %>
               <div class="clearfix"></div>
           </div>
+          <%= will_paginate @PositionPaginator %>
         </div>
         
     <% end %>
@@ -120,14 +126,10 @@
         </div>
         <div class="clearfix"></div>
       </div>
-        <% if @results.nil? %>
-          <%= will_paginate @PositionPaginator %>
-        <% end %>
-        <div class="clearfix"></div>
-
-
+        
     </div>
   </div>
+   <div class="clearfix"></div>
 
 
 

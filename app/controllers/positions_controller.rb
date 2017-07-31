@@ -4,6 +4,15 @@ class PositionsController < ApplicationController
 	before_action :set_position, only: [:update, :edit]
 	
 
+	def index
+		if params[:term]
+    		@titles = Position.order(:title).where("title like ?", "%#{params[:term]}%")
+    		render json: @titles.map(&:title)
+    	end
+
+    	
+  	end
+	
 
 	def search
 		if params[:search_company].present? && params[:search_position].present?
@@ -26,8 +35,8 @@ class PositionsController < ApplicationController
 			puts "ONLY COMPANY NO POSITION"
 			
 		else
-			flash[:success] = "Sorry search returned 0 results"
-			redirect_to root_url
+			flash.now[:success] = "Sorry search returned 0 results"
+			#redirect_to root_url
 
 		end
 	end
