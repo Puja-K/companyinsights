@@ -1,48 +1,119 @@
-<h1 align="center"> Company: <%= @company.name.capitalize %> </h1>
-<hr />
-<%= image_tag @company.picture.url if @company.picture? %>
-<div class="company-actions">
-		<%= link_to 'Add Levels', new_company_internal_level_path(@company), class: "btn btn-xs btn-warning" %>
-		<%= link_to 'New Position', new_company_position_path(@company), class: "btn btn-xs btn-warning" %>
-		<%= link_to "Edit", edit_company_path(@company), class: "btn btn-xs btn-warning"%>
-		<%= link_to "Delete", company_path(@company), method: :delete, 
-								data: {confirm: "Are you sure you want to delete this company?"}, 
-								class: "btn btn-xs btn-danger"%>
-		<%= link_to "Return to Companies list", companies_path, class: "btn btn-xs btn-primary	"%>
-	</div>
-<% @company.positions.each do |p| %>
-	<div class="row">
-		<div class="well">
-			<ul>
-				<li> <strong> Title: </strong><%= p.title %></li>
-				
-				<hr />
-
-				<li> <strong> Internal Level: 
-				<% p.internal_levels.each do |l| %>
-					</strong><%= l.name %></li>
-				<% end %>
-				<hr />
-
-				<li><strong> Description: </strong><%= p.description %></li>
-				
-				<hr />
-				<li><strong> Job Expectation: </strong><%= p.job_expectation %></li>
-				
-				<hr />
-				<li><strong> Average years of experience: </strong><%= p.avg_yrs_exp %></li>
-				
-				<hr />
-				<li><strong> Criteria for next level: </strong><%= p.criteria_for_next_level %></li>
-				
-			</ul>
-			<p>
-				<div class="company-actions center">
-					<%= link_to "Edit this position", edit_company_position_path(@company, p), class: "btn btn-primary btn-xs"%>
+<div class="infomation">
+    <div class="container">
+     
+      <div class="dashboard-row ads" style="margin:10px 0px;">
+			<div class="">
+			<div class="col-md-3">
+			<div class="form_row">
+				<div class="form_element" style="">
+					<span class="upload_file">
+						<div class="company_image">
+							<%= image_tag @company.picture.url if @company.picture? %>
+						</div>
+					</span>
 				</div>
-			</p>
-		</div>
+				<div class="clearfix"></div>
+			</div>
+			
+			</div>
+			<div class="col-md-9">
+			<div class="">
+				<form>
+					<div class="form_row">
+						 <h1 class="pull-left"><%= @company.name %></h1>
+						 <div class="clearfix"></div>
+					</div>
+					 <div class="clearfix"></div>
+					<div class="form_row">
+						<%= link_to "Edit", edit_company_path(@company), class: "  btn btn-green btn-search pull-left"%>
+					
+					</div>
+				</form>
+			</div>
+			</div>
+			
 		
-	</div>
+			
+		</div>
+       
+        <div class="clearfix"></div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
 
-<% end %>
+<div class="infomation">
+    <div class="container">
+      <div class="section-heading" style="padding-bottom:0px;">
+        <h1 class="pull-left">Positions</h1>
+        <div class="pull-right">
+        	<%= link_to 'Add Position', new_company_position_path(@company), class: " btn btn-green btn-search add-position" %>
+		 	<%= link_to 'Add Level', new_company_internal_level_path(@company), class: "btn btn-green btn-search" %>
+		 
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <div class="dashboard-row ads" style="margin:10px 0px;">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th style="text-align:center;">Title</th>
+              <th style="text-align:left;width:5%;">Internal Level</th>
+              <th style="text-align: center;">Description</th>
+              <th style="text-align: center;width:20%;">Job Expectation</th>
+			  <th style="text-align: center;width:12%;">Average years of experience</th>
+			  <th style="text-align: center;width:10%;">Criteria for next level</th>
+			  <th style="text-align: center; width:10%;">Action</th>
+			  
+            </tr>
+          </thead>
+          <tbody>
+          <% @PositionPaginator = @company.positions.paginate(:page => params[:page], :per_page => 5) %>
+          	<% @PositionPaginator.each do |p| %>
+	            <tr>
+	               <td style="text-align: left;"><%= p.title %></td>
+					<td style="text-align: left;">
+						<% p.internal_levels.each do |l| %>
+							<%= l.name %>
+						<% end %>	
+					</td>
+	              <td><%= p.description %></td>
+				  <td style="text-align: left;"><%= p.job_expectation %></td>
+					<td style="text-align: left;"><%= p.avg_yrs_exp %></td>
+	              <td><%= p.criteria_for_next_level %></td>
+	              <td>
+	              	<%= link_to edit_company_position_path(@company, p) do %>
+                    	<%= fa_icon "pencil", class: "action-btn" , aria: {hidden: true} %>
+                  	<% end %>
+                  	<%= link_to position_path(p), method: :delete, data: { confirm: 'Are you sure?' }  do %>
+                      <%= fa_icon "trash-o", class: "action-btn" , aria: {hidden: true} %>
+                  	<% end %>
+
+	              </td>
+	            </tr>
+           	<% end %>
+           
+           
+           
+          </tbody>
+        </table>
+        <%= will_paginate @PositionPaginator %>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

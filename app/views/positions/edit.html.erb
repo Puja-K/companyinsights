@@ -1,2 +1,6 @@
-<%= render 'shared/page_title', title: "Edit this position"%>
-<%= render 'form' %>
+<%= render 'shared/errors', object: @position %>
+<div class="login_form">
+	<h2 class="signin update1">Update Your Position</h2>
+	<%= render 'layouts/messages' %>
+	<%= render 'form' %>
+</div>
