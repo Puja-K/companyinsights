@@ -56,10 +56,10 @@ class PositionsController < ApplicationController
 
 		@position = @company.positions.build(position_params)
 		if @position.save
-			flash.now[:success] = "Position saved successfully"
+			flash[:success] = "Position saved successfully"
 			redirect_to company_path(@company)
 		else
-			flash.now[:danger] = "Position did not save!!"
+			flash[:danger] = "Position did not save!!"
 			render 'new'
 		end
 		#@position.internal_level_ids << params[:position][:internal_level_ids]
