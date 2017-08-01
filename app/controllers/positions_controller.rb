@@ -6,8 +6,13 @@ class PositionsController < ApplicationController
 
 	def index
 		if params[:term]
-    		@titles = Position.order(:title).where("title like ?", "%#{params[:term]}%")
-    		render json: @titles.map(&:title)
+			#needed for case insensitive search
+			if Rails.env.production?
+				@titles = Position.order(:title).where("title ILIKE ?", "%#{params[:term]}%")
+			else
+				@titles = Position.order(:title).where("title like ?", "%#{params[:term]}%")
+			end
+    		render json: @companies.map(&:name)
     	end
 
     	
