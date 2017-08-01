@@ -21,21 +21,36 @@ class PositionsController < ApplicationController
 			@company = Company.where('lower(name)= ?', params[:search_company].downcase).first
 
 			#query = Company.joins(:positions).where('positions.title' => params[:search_position]) 
-			@results = Position.search(params[:search_position], fields: [:title], match: :word_start, load: false, where: {company_id: @company.id})
-			puts @results.size
-			position = @results.first
-			@results.each do |position|
-				puts position.title
-  				puts position.company_name
-  				puts position.internal_levels
+			if !@company.nil?
+				@results = Position.search(params[:search_position], fields: [:title], match: :word_start, load: false, where: {company_id: @company.id})
+				puts @results.size
+				position = @results.first
+				@results.each do |position|
+					puts position.title
+  					puts position.company_name
+  					puts position.internal_levels
 
+				end
+				if @results.size ==0
+					flash.now[:warning] = "We don't have data for this position currently!!"
+				return
 			end
+			else
+				flash.now[:warning] = "Search returned 0 results!!"
+				return
+			end
+			
 		elsif params[:search_company].present? && !params[:search_position].present?
 			@company = Company.where('lower(name)= ?', params[:search_company].downcase).first
 			puts "ONLY COMPANY NO POSITION"
+			if @company.nil?
+				flash.now[:warning] = "Search returned 0 results!!"
+				return
+			end
 			
 		else
-			flash.now[:success] = "Sorry search returned 0 results"
+			puts "NO COMPANY OR POSITION PROVIDED FOR SEARCH"
+			flash.now[:error] = "Search returned 0 results"
 			#redirect_to root_url
 
 		end
