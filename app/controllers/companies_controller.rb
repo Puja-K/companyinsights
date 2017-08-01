@@ -7,7 +7,12 @@ class CompaniesController < ApplicationController
 
 	def index
 		if params[:term]
-    		@companies = Company.order(:name).where("name like ?", "%#{params[:term]}%")
+			#needed for case insensitive search
+			if Rails.env.production?
+				@companies = Company.order(:name).where("name ILIKE ?", "%#{params[:term]}%")
+			else
+				@companies = Company.order(:name).where("name like ?", "%#{params[:term]}%")
+			end
     		render json: @companies.map(&:name)
 
     	else
