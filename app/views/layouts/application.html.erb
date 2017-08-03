@@ -13,14 +13,16 @@
   	
     
   	<div class="wrapper">
-    <%= render 'layouts/navigation' %>
     
+    <%= render 'layouts/navigation' %>
     
     	<%= yield %>
     
-      <%= render 'layouts/footer' %>
+      
       
     </div>
+    <div class="push"></div>
+    <%= render 'layouts/footer' %>
 
   </body>
 </html>

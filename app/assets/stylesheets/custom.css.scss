@@ -31,6 +31,10 @@ a:hover, a:focus {
   color: #2a6496;
   text-decoration:none;
 }
+a, a:hover {
+color:#313335;
+}
+
 img {
   width:100%;
 }
@@ -213,7 +217,7 @@ input[type="text"], input[type="password"], select {
   padding: 7px;
   border-radius: 3px;
   font-size: 14px;
-  color:#969696;
+  color:#2d2d2d;
 }
 .btn-green {
   background:#48ce73;
@@ -473,6 +477,7 @@ input[type="text"], input[type="password"], select {
   color:#444;
 }
 .orgChart {
+opacity: 0.4;
   min-height:372px;
   margin-top: 12px;
 }
@@ -688,17 +693,9 @@ right connector from last child*/
   text-align: right;
   padding: 0px 8px;
 }
-.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
-  background-color: #313335;
-  border-color: #edf8f0;
-}
-.pagination > li > a, .pagination > li > span, .pagination > .disabled > span, .pagination > .disabled > span:hover, .pagination > .disabled > span:focus, .pagination > .disabled > a, .pagination > .disabled > a:hover, .pagination > .disabled > a:focus {
-  border-color: #edf8f0;
-  color: #888;
-}
-.pagination > li > a:hover, .pagination > li > span:hover, .pagination > li > a:focus, .pagination > li > span:focus {
-  background-color: #edf8f0;
-}
+
+.pagination{ float :right;}
+
 .listing {
   float:left;
   text-align:left;
@@ -1294,7 +1291,38 @@ ul.ui-autocomplete {
   }
 }
 
+ul.ui-autocomplete li {
+    list-style:none;
+    background-color: #FFF;
+    border-top: solid 1px #dedede !important;
+    margin: 0px;
+    padding: 9px 15px !important;
+}
+
+ul.ui-autocomplete li:hover {
+    background-color: #eee !important;
+}
+
 .add-position {
   margin-left: 7px;
 }
 
+.comingsoon {
+    position: absolute;
+    top: 121px;
+    left: 149px;
+    font-size: 40px;
+    color: #07a3ff;
+    font-weight: 700;
+}  
+
+textarea {
+    margin: 0px;
+    width: 100%; resize: vertical;
+    height: 84px;
+    padding: 12px;
+    -webkit-box-shadow: -1px -1px 8px 1px rgba(240,240,240,1);
+    -moz-box-shadow: -1px -1px 8px 1px rgba(240,240,240,1);
+    box-shadow: -1px -1px 8px 1px rgba(240,240,240,1);
+    border: 1px solid #c8c8c8;
+}             

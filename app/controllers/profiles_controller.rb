@@ -50,10 +50,40 @@ class ProfilesController < ApplicationController
 					@profile.internal_level = nil
 				end
 				@profile.position = position
+
+				#Start reporting structure updates
+				
+				if params[:profile][:you_report_to][:title].present? && !params[:profile][:you_report_to][:title].blank?
+					puts "Starting REPORTING STRUCTURE !!!!"
+					reporting_position = company.positions.create!(title: params[:profile][:you_report_to][:title])
+					relation = position.active_relationships.create!(reported_id: reporting_position.id, profile_id: @profile.id)
+					puts "Reporting positing is #{reporting_position.id} #{reporting_position.title}"
+					@profile.you_report_to = reporting_position
+
+					#if relation.save
+					#relatinship = Relationship.create()
+					#@profile.build_relationship(reported_id: reporting_position)
+
+				end
+				if params[:profile][:who_reports_to_you][:title].present? && !params[:profile][:who_reports_to_you][:title].blank?
+					puts "Starting REPORTING STRUCTURE for who reports to you!!!!"
+					reporter = company.positions.create!(title: params[:profile][:who_reports_to_you][:title])
+					relation = reporter.active_relationships.create!(reported_id: position.id, profile_id: @profile.id)
+					puts "Reporting into you is #{reporter.id} #{reporter.title}"
+					@profile.who_reports_to_you = reporter
+
+				end
+				if params[:profile][:you_report_to][:title].present? && params[:profile][:you_report_to][:title].blank?
+						@profile.you_report_to = nil
+				end
+				if params[:profile][:who_reports_to_you][:title].present? && params[:profile][:who_reports_to_you][:title].blank?
+						@profile.who_reports_to_you = nil
+				end
+
 				if @profile.update_attributes(profile_params)
 					puts "*** Horray profile sucessfully UPDATED !! ***"
 			      # Handle a successful update.
-			      	flash[:success] = "Profile updated !!"
+			      	flash[:success] = "Profile updated."
 			      	#redirect_to @user
 			    else
 			      redirect_to "/users/#{current_user.id}/profile" 
@@ -88,14 +118,14 @@ class ProfilesController < ApplicationController
 					@profile.internal_level = nil
 				end
 				@profile.position = position
-				if @profile.update_attributes(profile_params)
-					puts "*** Horray profile sucessfully UPDATED !! ***"
+				#if @profile.update_attributes(profile_params)
+				#	puts "*** Horray profile sucessfully UPDATED !! ***"
 			      # Handle a successful update.
-			      	flash[:success] = "Profile updated!!"
+			      #	flash[:success] = "Profile updated."
 			      	#redirect_to @user
-			    else
-			      redirect_to "/users/#{current_user.id}/profile" 
-			    end
+			   # else
+			    #  redirect_to "/users/#{current_user.id}/profile" 
+			   # end
 			
 			else
 				puts "*** Position already exists !!"
@@ -122,17 +152,62 @@ class ProfilesController < ApplicationController
 					@profile.internal_level = nil
 				end
 
-				if @profile.update_attributes(profile_params)
+
+				
+
+			end
+
+			puts "START REPORTING STRUCTURE UPDATES!!!"
+			if params[:profile][:you_report_to][:title].present? && !params[:profile][:you_report_to][:title].blank?
+					puts "Starting REPORTING STRUCTURE !!!!"
+					reporting_position = company.positions.find_or_create_by(title: params[:profile][:you_report_to][:title])
+					if position.reporting?(reporting_position)
+						puts "THIS REPORTING STRUCTURE ALREADY EXISTS!!! DON'T CREATE A NEW ONE."
+					else
+						relation = position.active_relationships.create!(reported_id: reporting_position.id, profile_id: @profile.id)
+					end
+					puts "Reporting position is #{reporting_position.id} #{reporting_position.title}"
+					@profile.you_report_to = reporting_position
+
+					#if relation.save
+					#relatinship = Relationship.create()
+					#@profile.build_relationship(reported_id: reporting_position)
+
+			elsif params[:profile][:you_report_to][:title].blank?
+					puts "you report to is empty !!!"
+						@profile.you_report_to = nil
+			end
+			if params[:profile][:who_reports_to_you][:title].present? && !params[:profile][:who_reports_to_you][:title].blank?
+					puts "Starting REPORTING STRUCTURE for who reports to you!!!!"
+					reporting_position = company.positions.find_or_create_by(title: params[:profile][:who_reports_to_you][:title])
+					if reporting_position.reporting?(position)
+						puts "THIS REPORTING STRUCTURE ALREADY EXISTS!!! DON'T CREATE A NEW ONE."
+					else
+						relation = reporting_position.active_relationships.create!(reported_id: position.id, profile_id: @profile.id)
+					end
+					puts "Reporting position is #{reporting_position.id} #{reporting_position.title}"
+					@profile.who_reports_to_you = reporting_position
+
+					#if relation.save
+					#relatinship = Relationship.create()
+					#@profile.build_relationship(reported_id: reporting_position)
+
+			elsif params[:profile][:who_reports_to_you][:title].blank?
+					puts "who reports to you is empty !!!!!!!!!!!"
+						@profile.who_reports_to_you = nil
+			end
+
+			
+			if @profile.update_attributes(profile_params)
 					puts "*** Horray profile sucessfully UPDATED !! ***"
 			      # Handle a successful update.
-			      	flash[:success] = "Profile updated!!"
+			      	flash[:success] = "Profile updated."
 			      	redirect_to "/users/#{current_user.id}/profile" 
 			      	return
-			    else
+			else
 			    	flash.now[:error] = "Could not update your profile"
-			      redirect_to "/users/#{current_user.id}/profile" 
-			    end
-
+			      #redirect_to "/users/#{current_user.id}/profile" 
+			      return
 			end
 		end
 		redirect_to "/users/#{current_user.id}/profile" 
@@ -163,7 +238,19 @@ class ProfilesController < ApplicationController
 				end
 				
 				if @profile.save
-					flash.now[:success] = "Thank you for creating your profile !!"
+
+					#Start reporting structure updates
+				
+					if params[:profile][:you_report_to][:title].present? && !params[:profile][:you_report_to][:title].blank?
+						puts "Starting REPORTING STRUCTURE !!!!"
+						reporting_position = company.positions.create!(title: params[:profile][:you_report_to][:title])
+						relation = position.active_relationships.create!(reported_id: reporting_position.id, profile_id: @profile.id)
+						puts "Reporting positing is #{reporting_position.id} #{reporting_position.title}"
+						@profile.you_report_to = reporting_position
+						@profile.update_column(:you_report_to_id, reporting_position.id)
+						
+					end
+					flash.now[:success] = "Thank you for creating your profile."
 					puts "*** Horray profile sucessfully created ***"
 					redirect_to "/users/#{@user.id}/profile"
 				end
@@ -185,13 +272,7 @@ class ProfilesController < ApplicationController
 				if params[:profile][:promotion_criteria].present?
 					@profile.promotion_criteria = params[:profile][:promotion_criteria]
 				end
-				if @profile.save
-					puts "*** Horray profile sucessfully created ***"
-					flash[:success] = "Thank you for creating your profile !!"
-					redirect_to "/users/#{@user.id}/profile"
-				end
-				#company.internal_levels.where(name: params[:name])
-			
+				
 			else
 				puts "*** Position already exists !!"
 				@profile =@user.build_profile(company_id: company.id, position_id: position.id)
@@ -209,15 +290,26 @@ class ProfilesController < ApplicationController
 					@profile.promotion_criteria = params[:profile][:promotion_criteria]
 				end
 
-				
-					
-				if @profile.save
-					puts "*** Horray profile sucessfully created ***"
-					flash.now[:success] = "Thank you for creating your profile !!"
-					redirect_to "/users/#{@user.id}/profile"
-				end
-
 			end
+			puts "START REPORTING STRUCTURE UPDATE FOR EXISTING COMPANY"
+			if @profile.save
+				if params[:profile][:you_report_to][:title].present? && !params[:profile][:you_report_to][:title].blank?
+					reporting_position = company.positions.find_or_create_by(title: params[:profile][:you_report_to][:title])
+					if position.reporting?(reporting_position)
+						puts "THIS REPORTING STRUCTURE ALREADY EXISTS!!! DON'T CREATE A NEW ONE."
+					else
+						relation = position.active_relationships.create!(reported_id: reporting_position.id, profile_id: @profile.id)
+					end
+					puts "Reporting positing is #{reporting_position.id} #{reporting_position.title}"
+					
+					@profile.update_column(:you_report_to_id, reporting_position.id)
+						
+				end
+				puts "*** Horray profile sucessfully created ***"
+				flash.now[:success] = "Thank you for creating your profile."
+				return
+			end
+
 		end
 
 		
@@ -227,7 +319,7 @@ class ProfilesController < ApplicationController
 	private
 
 	def profile_params
-		params.require(:profile).permit(:promotion_criteria, :user_id, :company_id, :position_id, :internal_level_id)
-		
+		params.require(:profile).permit(:promotion_criteria, :user_id, :company_id, :position_id, :internal_level_id, :you_report_to, :who_reports_to_you)
+		#params.require(:profile).permit!
 	end
 end

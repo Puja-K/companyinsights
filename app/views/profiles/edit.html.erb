@@ -15,16 +15,22 @@
 					<div class="form_row form_row1">
 					<div class="form_label">Where Do you Work?</div>
 					<%= fields_for @profile.company do |user_profile_company_form| %>
-						<div class="form_element"><%= user_profile_company_form.text_field :name, placeholder: "Company Name"%>
+						<div class="form_element"><%= user_profile_company_form.text_field :name, data: { autocomplete_source: companies_path}, placeholder: "Company Name"%>
 					</div>
 					<% end %>
 					<div class="clearfix"></div>
 					</div>
 					<div class="form_row form_row1">
 					<div class="form_label">Position/Job Title</div>
-					<%= fields_for @profile.position do |user_profile_position_form| %>
-						<div class="form_element"><%= user_profile_position_form.text_field :title, placeholder: "Ex: Product Manager" %></div>
-					<% end %>
+						<%= fields_for @profile.position do |user_profile_position_form| %>
+							<div class="form_element">
+								<%= user_profile_position_form.text_field :title, 
+									data: { autocomplete_source: positions_path},
+									placeholder: "Ex: Product Manager",
+									class: "position_autocomplete"
+ %>
+							</div>
+						<% end %>
 					<div class="clearfix"></div>
 					</div>
 					<div class="form_row  form_row1">
@@ -35,16 +41,34 @@
 					<% end %>
 					<div class="clearfix"></div>
 					</div>
-					<div class="form_row  form_row1">
-					<div class="form_label">Who do you report to?</div>
-					<div class="form_element"><input type="text" placeholder=""></div>
-					<div class="clearfix"></div>
-					</div>
-					<div class="form_row  form_row1">
-					<div class="form_label">Who reports to you?</div>
-					<div class="form_element"><input type="text" placeholder=""></div>
-					<div class="clearfix"></div>
-					</div>
+					
+						<div class="form_row  form_row1">
+						<div class="form_label">Who do you report to?</div>
+						<div class="form_element">
+							<%= fields_for 'profile[you_report_to]', @profile.you_report_to do |user_reporting_form| %>
+							<%= user_reporting_form.text_field :title, data: { autocomplete_source: positions_path},
+								placeholder: "Position/Title [Ex. Director Product Management]",
+								 class: "position_autocomplete"
+
+							%>
+							<%end%>
+						</div>
+						<div class="clearfix"></div>
+						</div>
+						<div class="form_row  form_row1">
+						<div class="form_label">Who reports to you?</div>
+						<div class="form_element">
+							<%= fields_for 'profile[who_reports_to_you]', @profile.who_reports_to_you do |user_reporting_form| %>
+							<%= user_reporting_form.text_field :title, data: { autocomplete_source: positions_path},
+								placeholder: "Position/Title [Ex. Product Management]",
+								 class: "position_autocomplete"
+
+							%>
+							<%end%>
+							</div>
+						<div class="clearfix"></div>
+						</div>
+				
 					<div class="form_row form_row1">
 					<div class="form_label">What will get you promoted to the last level?</div>
 					<div class="form_element">
@@ -54,7 +78,10 @@
 					</div>
 					
 					<div class="bottom_btns1">
-						<div class="cancel cancel1"><%= link_to "Cancel", root_path %></div>
+					<%= link_to root_path do %>
+						<div class="cancel cancel1">Cancel</div>
+					<%end %>
+						
 						
 						<%= user_form.submit "Submit", class: "btn btn-green edit1" %>
 						<div class="clearfix"></div>

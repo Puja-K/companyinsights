@@ -12,6 +12,20 @@ class Position < ApplicationRecord
 	#has_many :companies, through: :internal_levels
 	belongs_to :company
 
+	#defines the org/reporting structure
+	has_many :active_relationships, class_name:  "Relationship",
+                                  foreign_key: "reporter_id",
+                                  dependent:   :destroy 
+
+    has_many :reporting, through: :active_relationships, source: :reported
+
+    has_many :passive_relationships, class_name:  "Relationship",
+                                   foreign_key: "reported_id",
+                                   dependent:   :destroy
+
+    has_many :reporters, through: :passive_relationships, source: :reporter
+    has_many :profiles
+
 	searchkick word_start: [:title]
 	scope :search_import, -> { includes(:company, :internal_levels) }
 	after_commit :reindex_position
@@ -30,4 +44,20 @@ class Position < ApplicationRecord
 	      internal_levels: "#{internal_levels.map(&:name).join(" ")}"
 	    )
 	end
+
+	# Follows a user.
+  def report(other_position)
+    reporting << other_position
+  end
+
+  # Unfollows a user.
+  def unreport(other_position)
+    reporting.delete(other_position)
+  end
+
+  # Returns true if the current user is following the other user.
+  def reporting?(other_position)
+    reporting.include?(other_position)
+  end
+
 end

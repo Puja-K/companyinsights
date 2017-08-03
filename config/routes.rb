@@ -28,7 +28,11 @@ Rails.application.routes.draw do
   		get 'search'
       get :autocomplete 
   	end
+    member do
+      get :reporting, :reporters
+    end
   end
+
 
   #resources :users do
     #resources :profiles
@@ -54,6 +58,8 @@ Rails.application.routes.draw do
   resources :account_activations, only: [:edit]
   resources :password_resets, only: [:new, :create, :edit, :update]
 
+  resources :relationships,       only: [:create, :destroy]
+  
   get '/auth/:provider/callback', to: 'oauths#create'
   get '/auth/failure', to: 'oauth#failure', as: 'oauth_failure'
   

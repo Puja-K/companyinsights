@@ -7,9 +7,9 @@ class PositionsController < ApplicationController
 	def index
 		if params[:term]
 			if Rails.env.production?
-				@titles = Position.order(:title).where("title ILIKE ?", "%#{params[:term]}%")
+				@titles = Position.select("distinct title").where("title ILIKE ?", "%#{params[:term]}%").order(:title)
 			else
-				@titles = Position.order(:title).where("title like ?", "%#{params[:term]}%")
+				@titles = Position.select("distinct title").where("title like ?", "%#{params[:term]}%").order(:title)
 			end
     		render json: @titles.map(&:title)
     	end
@@ -36,11 +36,11 @@ class PositionsController < ApplicationController
 
 				end
 				if @results.size ==0
-					flash.now[:warning] = "We don't have data for this position currently!!"
+					flash.now[:warning] = "We don't have data for this position currently."
 				return
 			end
 			else
-				flash.now[:warning] = "Search returned 0 results!!"
+				flash.now[:warning] = "Search returned 0 results."
 				return
 			end
 			
@@ -48,13 +48,13 @@ class PositionsController < ApplicationController
 			@company = Company.where('lower(name)= ?', params[:search_company].downcase).first
 			puts "ONLY COMPANY NO POSITION"
 			if @company.nil?
-				flash.now[:warning] = "Search returned 0 results!!"
+				flash.now[:warning] = "Search returned 0 results."
 				return
 			end
 			
 		else
 			puts "NO COMPANY OR POSITION PROVIDED FOR SEARCH"
-			flash.now[:error] = "Search returned 0 results"
+			flash.now[:error] = "Search returned 0 results."
 			#redirect_to root_url
 
 		end
@@ -84,10 +84,10 @@ class PositionsController < ApplicationController
 
 		@position = @company.positions.build(position_params)
 		if @position.save
-			flash[:success] = "Position saved successfully"
+			flash[:success] = "Position saved successfully."
 			redirect_to company_path(@company)
 		else
-			flash[:danger] = "Position did not save!!"
+			flash[:danger] = "Position did not save."
 			render 'new'
 		end
 		#@position.internal_level_ids << params[:position][:internal_level_ids]
@@ -128,7 +128,7 @@ class PositionsController < ApplicationController
 
 	def update
 		if @position.update(position_params)
-			flash[:success] = "This position was updated successfully!"
+			flash[:success] = "This position was updated successfully."
 			redirect_to company_path(@company)
 		else
 			render 'edit'

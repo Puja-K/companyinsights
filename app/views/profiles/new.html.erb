@@ -22,7 +22,8 @@
 					<div class="form_row form_row1">
 					<div class="form_label">Position/Job Title</div>
 					<%= fields_for @profile.position do |user_profile_position_form| %>
-						<div class="form_element"><%= user_profile_position_form.text_field :title, placeholder: "Ex: Product Manager" %></div>
+						<div class="form_element"><%= user_profile_position_form.text_field :title, placeholder: "Ex: Product Manager",
+							class: "position_autocomplete" %></div>
 					<% end %>
 					<div class="clearfix"></div>
 					</div>
@@ -35,10 +36,18 @@
 					<div class="clearfix"></div>
 					</div>
 					<div class="form_row  form_row1">
-					<div class="form_label">Who do you report to?</div>
-					<div class="form_element"><input type="text" placeholder=""></div>
-					<div class="clearfix"></div>
-					</div>
+						<div class="form_label">Who do you report to?</div>
+						<div class="form_element">
+							<%= fields_for 'profile[you_report_to]', @profile.you_report_to do |user_reporting_form| %>
+							<%= user_reporting_form.text_field :title, data: { autocomplete_source: positions_path},
+								placeholder: "Position/Title [Ex. Director Product Management]",
+								 class: "position_autocomplete"
+
+							%>
+							<%end%>
+						</div>
+						<div class="clearfix"></div>
+						</div>
 					<div class="form_row  form_row1">
 					<div class="form_label">Who reports to you?</div>
 					<div class="form_element"><input type="text" placeholder=""></div>

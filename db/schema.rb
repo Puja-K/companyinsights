@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170724220742) do
+ActiveRecord::Schema.define(version: 20170803202223) do
 
   create_table "bands", force: :cascade do |t|
     t.integer "position_id"
@@ -71,10 +71,28 @@ ActiveRecord::Schema.define(version: 20170724220742) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "internal_level_id"
+    t.integer "relationship_id"
+    t.integer "you_report_to_id"
+    t.integer "who_reports_to_you_id"
     t.index ["company_id"], name: "index_profiles_on_company_id"
     t.index ["internal_level_id"], name: "index_profiles_on_internal_level_id"
     t.index ["position_id"], name: "index_profiles_on_position_id"
+    t.index ["relationship_id"], name: "index_profiles_on_relationship_id"
     t.index ["user_id"], name: "index_profiles_on_user_id"
+    t.index ["who_reports_to_you_id"], name: "index_profiles_on_who_reports_to_you_id"
+    t.index ["you_report_to_id"], name: "index_profiles_on_you_report_to_id"
+  end
+
+  create_table "relationships", force: :cascade do |t|
+    t.integer "reporter_id"
+    t.integer "reported_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "profile_id"
+    t.index ["profile_id"], name: "index_relationships_on_profile_id"
+    t.index ["reported_id"], name: "index_relationships_on_reported_id"
+    t.index ["reporter_id", "reported_id"], name: "index_relationships_on_reporter_id_and_reported_id", unique: true
+    t.index ["reporter_id"], name: "index_relationships_on_reporter_id"
   end
 
   create_table "users", force: :cascade do |t|
