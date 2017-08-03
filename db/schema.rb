@@ -71,13 +71,11 @@ ActiveRecord::Schema.define(version: 20170803202223) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "internal_level_id"
-    t.integer "relationship_id"
     t.integer "you_report_to_id"
     t.integer "who_reports_to_you_id"
     t.index ["company_id"], name: "index_profiles_on_company_id"
     t.index ["internal_level_id"], name: "index_profiles_on_internal_level_id"
     t.index ["position_id"], name: "index_profiles_on_position_id"
-    t.index ["relationship_id"], name: "index_profiles_on_relationship_id"
     t.index ["user_id"], name: "index_profiles_on_user_id"
     t.index ["who_reports_to_you_id"], name: "index_profiles_on_who_reports_to_you_id"
     t.index ["you_report_to_id"], name: "index_profiles_on_you_report_to_id"
