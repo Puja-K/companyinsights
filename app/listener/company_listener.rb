@@ -6,6 +6,8 @@ class CompanyListener
 		c_name = raw_data["positions"]["values"][0]["company"]["name"]
 			if Rails.env.production?
 				company = Company.where("name ILIKE ?", "#{c_name}")
+				puts "does the company exist?"
+				puts company.nil?
 			else
 				company = Company.find_by(name: "#{c_name}")
 				puts company.nil?
