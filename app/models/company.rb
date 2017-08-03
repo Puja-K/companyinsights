@@ -9,7 +9,7 @@ class Company < ApplicationRecord
 	has_many :positions, dependent: :destroy
 	has_many :profiles
 	searchkick 
-
+	#scope :ci_find, lambda { |attribute, value| where("lower(#{attribute}) = ?", value.downcase).first }
 	
 	
 
