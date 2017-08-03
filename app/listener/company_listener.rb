@@ -4,14 +4,18 @@ class CompanyListener
 		raw_data = auth[:extra][:raw_info].as_json
 
 		c_name = raw_data["positions"]["values"][0]["company"]["name"]
-			if Rails.env.production?
-				@company = Company.where("name ILIKE ?", "#{c_name}")
-				puts "does the company exist?"
-				puts @company.nil?
-			else
-				@company = Company.find_by(name: "#{c_name}")
-				puts @company.nil?
-			end
+			#if Rails.env.production?
+			#	@company = Company.where("name ILIKE ?", "#{c_name}")
+			#	puts "does the company exist?"
+			#	puts @company.nil?
+			#else
+			#	@company = Company.find_by(name: "#{c_name}")
+			#	puts @company.nil?
+			#end
+			puts "c_name is #{c_name}"
+
+			@company = Company.ci_find('name', c_name)
+			puts @company.nil?
 		if @company.nil?
 			@company = Company.create!(name: c_name, industry: raw_data["positions"]["values"][0]["company"]["industry"],
 				location: raw_data["positions"]["values"][0]["location"]["name"], company_type:raw_data["positions"]["values"][0]["company"]["type"] ) 
