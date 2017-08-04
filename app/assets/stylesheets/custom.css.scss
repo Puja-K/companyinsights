@@ -1292,15 +1292,14 @@ ul.ui-autocomplete {
 }
 
 ul.ui-autocomplete li {
-    list-style:none;
     background-color: #FFF;
     border-top: solid 1px #dedede !important;
     margin: 0px;
     padding: 9px 15px !important;
 }
-
 ul.ui-autocomplete li:hover {
-    background-color: #eee !important;
+    color: #fff;
+    background-color: #9e9e9e !important;
 }
 
 .add-position {
